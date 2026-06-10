@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Objects That Stay — KNOTT Gifting Catalogue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400&family=Playfair+Display:wght@400;500&family=Inter:wght@200;300;400&display=swap" rel="stylesheet"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400&family=Playfair+Display:wght@400;500&family=Inter:wght@200;300;400&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --w:#F7F5F2;--ww:#FFFFFF;--bk:#0F0F0F;--mid:#888;--lt:#C0BDB8;
+  --rule:#E0DDD8;--dark:#111009;
+  --display:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--w);color:var(--bk);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .85s ease,transform .85s ease;}
+.reveal.in{opacity:1;transform:none;}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto 0;z-index:200;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:rgba(247,245,242,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--rule);}
+.logo{font-size:11px;font-weight:400;letter-spacing:10px;text-transform:uppercase;color:var(--bk);text-decoration:none;}
+.nav-links{display:flex;gap:40px;position:absolute;left:50%;transform:translateX(-50%);}
+.nav-links a{font-size:10px;font-weight:300;letter-spacing:2.5px;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--bk);}
+.nav-cta{font-size:10px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:var(--bk);text-decoration:none;border-bottom:1px solid var(--bk);padding-bottom:2px;}
+
+/* HERO BANNER */
+.cat-hero{
+  padding-top:68px;
+  background:var(--dark);
+  min-height:52vh;
+  display:flex;
+  align-items:flex-end;
+  padding-bottom:72px;
+  padding-left:56px;
+  padding-right:56px;
+  position:relative;
+  overflow:hidden;
+}
+.cat-hero-bg{
+  position:absolute;inset:0;
+  background-image:url('images/arc-warm.jpg');
+  background-size:cover;background-position:center;
+  opacity:.12;
+}
+.cat-hero-inner{position:relative;z-index:2;}
+.back-link{font-size:10px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.35);text-decoration:none;display:inline-flex;align-items:center;gap:8px;margin-bottom:32px;transition:color .3s;}
+.back-link:hover{color:rgba(255,255,255,.7);}
+.cat-hero-label{font-size:10px;font-weight:300;letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:20px;}
+.cat-hero-h1{font-family:var(--display);font-size:clamp(40px,5.5vw,80px);font-weight:400;color:rgba(255,255,255,.88);line-height:1.08;margin-bottom:24px;}
+.cat-hero-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.85;max-width:520px;}
+
+/* HOW IT WORKS */
+.how{background:var(--ww);border-bottom:1px solid var(--rule);padding:72px 56px;}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--rule);margin-top:52px;}
+.how-step{background:var(--ww);padding:40px 36px;}
+.how-num{font-size:11px;font-weight:300;letter-spacing:3px;color:var(--lt);margin-bottom:16px;}
+.how-title{font-family:var(--display);font-size:22px;font-weight:400;color:var(--bk);margin-bottom:12px;}
+.how-desc{font-size:12px;font-weight:300;color:var(--mid);line-height:1.85;}
+
+/* CATEGORIES */
+.categories{background:var(--w);}
+.cat-section-header{padding:72px 56px 56px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;}
+.sec-label{font-size:10px;font-weight:400;letter-spacing:6px;text-transform:uppercase;color:#888;margin-bottom:20px;}
+.sec-h{font-family:var(--display);font-size:clamp(36px,4.5vw,64px);font-weight:400;line-height:1.1;color:var(--bk);}
+.sec-p{font-size:13px;font-weight:300;color:var(--mid);line-height:1.9;}
+
+/* Category cards */
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;}
+.cat-card{border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);overflow:hidden;cursor:pointer;transition:background .35s;}
+.cat-card:nth-child(even){border-right:none;}
+.cat-card:hover{background:var(--ww);}
+.cat-card-img{
+  height:360px;
+  background:var(--ww);
+  border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.cat-card-img span{font-size:11px;font-weight:300;letter-spacing:2px;color:var(--lt);}
+.cat-card-body{padding:44px 48px 56px;}
+.cat-card-name{font-family:var(--display);font-size:30px;font-weight:400;color:var(--bk);margin-bottom:12px;}
+.cat-card-desc{font-size:13px;font-weight:300;color:var(--mid);line-height:1.9;max-width:460px;margin-bottom:28px;}
+.cat-card-items{list-style:none;border-top:1px solid var(--rule);margin-bottom:32px;}
+.cat-card-items li{font-size:11px;font-weight:300;color:var(--mid);padding:11px 0;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:10px;}
+.cat-card-items li::before{content:'';width:14px;height:1px;background:var(--rule);flex-shrink:0;}
+.txt-link{font-size:10px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:var(--bk);text-decoration:none;border-bottom:1px solid var(--bk);padding-bottom:2px;display:inline-flex;align-items:center;gap:8px;transition:gap .3s,color .25s;}
+.txt-link:hover{gap:14px;color:var(--mid);}
+
+/* Custom CTA */
+.custom-cta{
+  background:var(--dark);
+  padding:100px 56px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  align-items:center;
+}
+.custom-cta-h{font-family:var(--display);font-size:clamp(32px,4vw,56px);font-weight:400;color:rgba(255,255,255,.85);line-height:1.1;margin-bottom:20px;}
+.custom-cta-p{font-size:13px;font-weight:300;color:rgba(255,255,255,.35);line-height:1.9;margin-bottom:40px;}
+.btn-fill{font-family:var(--sans);font-size:10px;font-weight:400;letter-spacing:3.5px;text-transform:uppercase;color:var(--bk);background:#fff;padding:16px 40px;text-decoration:none;display:inline-block;transition:background .3s;}
+.btn-fill:hover{background:var(--w);}
+.custom-cta-details{border-top:1px solid rgba(255,255,255,.06);}
+.cta-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.cta-row span:first-child{font-size:9px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.2);}
+.cta-row span:last-child,.cta-row a{font-size:12px;font-weight:300;color:rgba(255,255,255,.4);text-decoration:none;}
+
+/* FOOTER */
+footer{background:var(--dark);padding:64px 56px 40px;border-top:1px solid rgba(255,255,255,.04);}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;}
+.foot-copy{font-size:10px;font-weight:300;color:#2a2825;letter-spacing:.5px;}
+.foot-email{font-size:10px;font-weight:300;color:#3a3835;text-decoration:none;transition:color .25s;}
+.foot-email:hover{color:rgba(255,255,255,.5);}
+.foot-nav{display:flex;gap:32px;}
+.foot-nav a{font-size:10px;font-weight:300;letter-spacing:2px;text-transform:uppercase;color:#2e2c28;text-decoration:none;transition:color .25s;}
+.foot-nav a:hover{color:rgba(255,255,255,.4);}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:0 24px;}
+  .nav-links{display:none;}
+  .cat-hero{padding:68px 24px 56px;min-height:auto;}
+  .how{padding:56px 24px;}
+  .how-grid{grid-template-columns:1fr;}
+  .cat-section-header{grid-template-columns:1fr;gap:20px;padding:56px 24px 44px;}
+  .cat-grid{grid-template-columns:1fr;}
+  .cat-card{border-right:none;}
+  .cat-card-body{padding:32px 24px 44px;}
+  .custom-cta{grid-template-columns:1fr;gap:48px;padding:72px 24px;}
+  footer{padding:48px 24px 32px;}
+  .foot-bottom{flex-direction:column;gap:16px;align-items:flex-start;}
+  .foot-nav{flex-wrap:wrap;gap:20px;}
+}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">Knott</a>
+  <div class="nav-links">
+    <a href="index.html#services">Services</a>
+    <a href="catalogue.html" class="active">Catalogue</a>
+    <a href="index.html#shop">By KNOTT</a>
+    <a href="index.html#portfolio">Portfolio</a>
+    <a href="index.html#about">About</a>
+  </div>
+  <a href="index.html#contact" class="nav-cta">Book a Consultation</a>
+</nav>
+
+<!-- HERO -->
+<div class="cat-hero">
+  <div class="cat-hero-bg"></div>
+  <div class="cat-hero-inner">
+    <a href="index.html#services" class="back-link reveal">← Back to Services</a>
+    <p class="cat-hero-label reveal d1">Objects That Stay — Catalogue</p>
+    <h1 class="cat-hero-h1 reveal d2">Curated for the<br/>moments that matter.</h1>
+    <p class="cat-hero-sub reveal d3">Everything here is selected by KNOTT. Not generic swag. Objects people keep, use, and notice — long after the event ends.</p>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how">
+  <p class="sec-label reveal">How It Works</p>
+  <div class="how-grid">
+    <div class="how-step reveal">
+      <p class="how-num">01</p>
+      <h3 class="how-title">You Tell Us the Moment</h3>
+      <p class="how-desc">A client event, a team milestone, a product launch. You tell us who the people are and what you want them to feel.</p>
+    </div>
+    <div class="how-step reveal d1">
+      <p class="how-num">02</p>
+      <h3 class="how-title">We Build the Package</h3>
+      <p class="how-desc">We curate a selection from the categories below — tailored to your brand, your event, and your budget. Nothing generic.</p>
+    </div>
+    <div class="how-step reveal d2">
+      <p class="how-num">03</p>
+      <h3 class="how-title">They Remember You</h3>
+      <p class="how-desc">The event ends. The object stays. Every time they use it, they think of your brand. That's the whole point.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories">
+  <div class="cat-section-header">
+    <div>
+      <p class="sec-label reveal">Browse by Category</p>
+      <h2 class="sec-h reveal d1">Four ways to<br/>make it memorable.</h2>
+    </div>
+    <p class="sec-p reveal d2">Contact us to mix and match across categories. Most gifting packages combine 2 or more. We handle everything — sourcing, packaging, and delivery.</p>
+  </div>
+
+  <div class="cat-grid">
+
+    <!-- Focus & Calm -->
+    <div class="cat-card reveal">
+      <div class="cat-card-img"><span>Focus objects — photos coming soon</span></div>
+      <div class="cat-card-body">
+        <h3 class="cat-card-name">Focus & Calm Objects</h3>
+        <p class="cat-card-desc">Precision desk instruments that bring stillness to a busy environment. Fidget tools, focus weights, mindful objects — the kind of thing that earns a permanent spot on someone's desk.</p>
+        <ul class="cat-card-items">
+          <li>Desk fidget & focus tools</li>
+          <li>Weighted meditation objects</li>
+          <li>Mindful spinning instruments</li>
+          <li>Precision desk accessories</li>
+        </ul>
+        <a href="index.html#contact" class="txt-link">Make an Inquiry →</a>
+      </div>
+    </div>
+
+    <!-- Wellness -->
+    <div class="cat-card reveal d1">
+      <div class="cat-card-img"><span>Wellness sets — photos coming soon</span></div>
+      <div class="cat-card-body">
+        <h3 class="cat-card-name">Wellness Collections</h3>
+        <p class="cat-card-desc">Thoughtfully assembled wellness sets for teams and clients. Chosen because they become part of someone's routine — not because they look nice in a photo and end up in a drawer.</p>
+        <ul class="cat-card-items">
+          <li>Morning ritual sets</li>
+          <li>Stress & recovery tools</li>
+          <li>Sleep & calm accessories</li>
+          <li>Movement & breathwork objects</li>
+        </ul>
+        <a href="index.html#contact" class="txt-link">Make an Inquiry →</a>
+      </div>
+    </div>
+
+    <!-- Hosting & Table -->
+    <div class="cat-card reveal">
+      <div class="cat-card-img"><span>Hosting objects — photos coming soon</span></div>
+      <div class="cat-card-body">
+        <h3 class="cat-card-name">Hosting & Table Objects</h3>
+        <p class="cat-card-desc">For the moments that happen around a table. Wine accessories, serving objects, cheese knives — gifts that show up at every dinner party and carry your brand into someone's home.</p>
+        <ul class="cat-card-items">
+          <li>Wine & bar accessories</li>
+          <li>Serving & cheese tools</li>
+          <li>Table & hosting objects</li>
+          <li>Premium food & drink pairings</li>
+        </ul>
+        <a href="index.html#contact" class="txt-link">Make an Inquiry →</a>
+      </div>
+    </div>
+
+    <!-- Custom -->
+    <div class="cat-card reveal d1">
+      <div class="cat-card-img"><span>Custom packages — photos coming soon</span></div>
+      <div class="cat-card-body">
+        <h3 class="cat-card-name">Custom Brand Packages</h3>
+        <p class="cat-card-desc">Built entirely around your brand identity, event theme, or team culture. We design the package, source the objects, and handle everything — so the experience feels considered, not assembled.</p>
+        <ul class="cat-card-items">
+          <li>Full package design & curation</li>
+          <li>Custom branded elements</li>
+          <li>Luxury unboxing experience</li>
+          <li>Bulk orders for events</li>
+        </ul>
+        <a href="index.html#contact" class="txt-link">Make an Inquiry →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CUSTOM CTA -->
+<div class="custom-cta">
+  <div>
+    <h2 class="custom-cta-h reveal">Ready to build<br/>your package?</h2>
+    <p class="custom-cta-p reveal d1">Tell us about your event, your people, and your brand. We'll put together a proposal within 48 hours — no obligation.</p>
+    <a href="index.html#contact" class="btn-fill reveal d2">Book a Consultation</a>
+  </div>
+  <div class="custom-cta-details reveal d1">
+    <div class="cta-row"><span>Email</span><a href="mailto:Connect@knottdesign.ca">Connect@knottdesign.ca</a></div>
+    <div class="cta-row"><span>Location</span><span>Toronto, Canada</span></div>
+    <div class="cta-row"><span>Turnaround</span><span>Proposal within 48 hours</span></div>
+    <div class="cta-row"><span>Minimum Order</span><span>Contact us to discuss</span></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-bottom">
+    <span class="foot-copy">© 2026 KNOTT. All rights reserved.</span>
+    <div class="foot-nav">
+      <a href="index.html">Home</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#shop">By KNOTT</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <a href="mailto:Connect@knottdesign.ca" class="foot-email">Connect@knottdesign.ca</a>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+  });
+});
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+setTimeout(()=>{document.querySelectorAll('.cat-hero .reveal').forEach((el,i)=>setTimeout(()=>el.classList.add('in'),200+i*150));},100);
+</script>
+</body>
+</html>
