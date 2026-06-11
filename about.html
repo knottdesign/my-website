@@ -11,7 +11,7 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 :root{
   --w:#F7F5F2;--ww:#FFFFFF;--bk:#0F0F0F;
-  --mid:#888;--lt:#C0BDB8;--rule:#E0DDD8;--dark:#111009;
+  --mid:#555;--lt:#A0A09A;--rule:#D8D5D0;--dark:#111009;
   --serif:'Playfair Display',Georgia,serif;
   --sans:'Inter',system-ui,sans-serif;
 }
@@ -35,50 +35,51 @@ nav{position:fixed;inset:0 0 auto 0;z-index:200;height:68px;display:flex;align-i
 .mob-menu a:last-child{color:var(--bk);font-weight:400;border-bottom:none;}
 .mob-menu.open{display:flex;}
 
-/* HERO — dark enough to read all text */
+/* HERO */
 .about-hero{
-  padding-top:68px;min-height:58vh;
+  padding-top:68px;
+  min-height:60vh;
   background:linear-gradient(160deg,#5a5855 0%,#3a3835 25%,#252320 55%,#131210 80%,#0a0908 100%);
   display:flex;flex-direction:column;justify-content:flex-end;
-  padding-left:56px;padding-right:56px;padding-bottom:80px;padding-top:120px;
+  padding-left:56px;padding-right:56px;padding-bottom:80px;
 }
-.back-link{font-size:10px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;margin-bottom:48px;display:inline-block;transition:color .3s;}
-.back-link:hover{color:rgba(255,255,255,.85);}
+.back-link{font-size:11px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.6);text-decoration:none;margin-bottom:40px;display:inline-block;transition:color .3s;margin-top:40px;}
+.back-link:hover{color:rgba(255,255,255,.9);}
 .hero-label{font-size:12px;font-weight:300;letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:20px;}
 .hero-h1{font-family:var(--serif);font-size:clamp(40px,5.5vw,80px);font-weight:400;color:rgba(255,255,255,.95);line-height:1.06;margin-bottom:24px;}
-.hero-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,.6);line-height:1.85;max-width:500px;}
+.hero-sub{font-size:15px;font-weight:300;color:rgba(255,255,255,.65);line-height:1.85;max-width:500px;}
 
-/* SECTION 1 — WHAT IS KNOTT */
+/* SECTION 1 */
 .knott-what{background:var(--ww);border-bottom:1px solid var(--rule);padding:96px 56px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start;}
-.knott-label{font-size:12px;font-weight:300;letter-spacing:6px;text-transform:uppercase;color:#888;margin-bottom:22px;}
+.knott-label{font-size:11px;font-weight:300;letter-spacing:6px;text-transform:uppercase;color:#666;margin-bottom:22px;}
 .knott-h{font-family:var(--serif);font-size:clamp(38px,4.5vw,62px);font-weight:400;line-height:1.1;color:var(--bk);}
 .knott-what-right{display:flex;flex-direction:column;gap:22px;padding-top:4px;}
-.knott-p{font-size:14px;font-weight:300;color:var(--mid);line-height:2.1;}
+.knott-p{font-size:15px;font-weight:300;color:var(--mid);line-height:2.1;}
 .knott-p strong{font-weight:400;color:var(--bk);}
 
-/* SECTION 2 — WHY A KNOT */
+/* SECTION 2 */
 .why-knott{background:var(--w);border-bottom:1px solid var(--rule);padding:96px 56px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;}
-.why-left{}
-.why-logo{
-  width:100%;
-  max-width:280px;
-  display:block;
-  margin-bottom:32px;
-  opacity:0.7;
-}
 .why-tagline{font-family:var(--serif);font-size:clamp(24px,2.8vw,38px);font-weight:400;color:var(--bk);line-height:1.5;}
 .why-right{display:flex;flex-direction:column;gap:22px;}
 
-/* FOUNDERS */
+/* FOUNDERS — smaller photo with border */
 .founders-section{background:var(--ww);border-bottom:1px solid var(--rule);}
-.founders-inner{display:grid;grid-template-columns:1fr 1fr;}
-.founders-photo-wrap{border-right:1px solid var(--rule);overflow:hidden;min-height:560px;position:relative;}
-.founders-photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
-.founders-caption{position:absolute;bottom:24px;left:28px;font-size:9px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.founders-inner{display:grid;grid-template-columns:1fr 1fr;align-items:start;}
+.founders-photo-side{padding:64px 48px;border-right:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.founders-photo-frame{
+  border:1px solid var(--rule);
+  padding:12px;
+  background:var(--ww);
+  max-width:380px;
+  width:100%;
+  position:relative;
+}
+.founders-photo-frame img{width:100%;height:auto;display:block;object-fit:cover;}
+.founders-caption{font-size:9px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:var(--lt);text-align:center;margin-top:16px;}
 .founders-text{padding:72px 56px;display:flex;flex-direction:column;justify-content:center;}
 .founders-tagline{font-family:var(--serif);font-size:clamp(30px,3.5vw,50px);font-weight:400;line-height:1.1;color:var(--bk);margin-bottom:36px;}
 .founders-tagline span{color:var(--lt);}
-.founders-bio{font-size:13px;font-weight:300;color:var(--mid);line-height:2;margin-bottom:20px;}
+.founders-bio{font-size:15px;font-weight:300;color:var(--mid);line-height:2;margin-bottom:20px;}
 .founders-bio strong{font-weight:400;color:var(--bk);}
 .founders-names{border-top:1px solid var(--rule);padding-top:32px;margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
 .founder-name{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--bk);}
@@ -93,33 +94,33 @@ nav{position:fixed;inset:0 0 auto 0;z-index:200;height:68px;display:flex;align-i
 .belief:hover{background:var(--ww);}
 .belief-num{font-family:var(--serif);font-size:48px;font-weight:400;color:var(--rule);line-height:1;margin-bottom:24px;}
 .belief-title{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--bk);margin-bottom:12px;}
-.belief-desc{font-size:13px;font-weight:300;color:var(--mid);line-height:1.9;}
+.belief-desc{font-size:14px;font-weight:300;color:var(--mid);line-height:1.9;}
 
 /* CLOSING */
 .closing{background:var(--dark);padding:100px 56px;text-align:center;}
-.closing-q{font-family:var(--serif);font-size:clamp(20px,2.5vw,34px);font-weight:400;color:rgba(255,255,255,.75);line-height:1.55;max-width:780px;margin:0 auto 32px;}
+.closing-q{font-family:var(--serif);font-size:clamp(20px,2.5vw,34px);font-weight:400;color:rgba(255,255,255,.85);line-height:1.55;max-width:780px;margin:0 auto 32px;}
 .closing-line{width:36px;height:1px;background:#B8955A;margin:0 auto 20px;}
-.closing-attr{font-size:10px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:#B8955A;}
+.closing-attr{font-size:11px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:#B8955A;}
 
 /* CTA */
 .cta-section{background:var(--w);padding:96px 56px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;border-top:1px solid var(--rule);}
 .cta-h{font-family:var(--serif);font-size:clamp(30px,4vw,52px);font-weight:400;line-height:1.1;color:var(--bk);margin-bottom:20px;}
-.cta-p{font-size:13px;font-weight:300;color:var(--mid);line-height:1.9;margin-bottom:36px;}
+.cta-p{font-size:15px;font-weight:300;color:var(--mid);line-height:1.9;margin-bottom:36px;}
 .btn-dark{font-size:10px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#fff;background:var(--bk);padding:15px 36px;text-decoration:none;display:inline-block;transition:background .3s;}
 .btn-dark:hover{background:#2a2a2a;}
 .cta-details{border-top:1px solid var(--rule);}
-.cta-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--rule);}
-.cta-row span:first-child{font-size:9px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--lt);}
-.cta-row a,.cta-row span:last-child{font-size:12px;font-weight:300;color:var(--bk);text-decoration:none;}
+.cta-row{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--rule);}
+.cta-row span:first-child{font-size:10px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--lt);}
+.cta-row a,.cta-row span:last-child{font-size:14px;font-weight:300;color:var(--bk);text-decoration:none;}
 
 /* FOOTER */
 footer{background:var(--dark);padding:64px 56px 40px;}
 .foot-bottom{display:flex;justify-content:space-between;align-items:center;}
-.foot-copy{font-size:10px;font-weight:300;color:#2a2825;}
+.foot-copy{font-size:11px;font-weight:300;color:#6a6865;}
 .foot-nav{display:flex;gap:32px;}
-.foot-nav a{font-size:10px;font-weight:300;letter-spacing:2px;text-transform:uppercase;color:#2e2c28;text-decoration:none;transition:color .25s;}
-.foot-nav a:hover{color:rgba(255,255,255,.4);}
-.foot-email{font-size:10px;font-weight:300;color:#3a3835;text-decoration:none;}
+.foot-nav a{font-size:11px;font-weight:300;letter-spacing:2px;text-transform:uppercase;color:#6a6865;text-decoration:none;transition:color .25s;}
+.foot-nav a:hover{color:rgba(255,255,255,.6);}
+.foot-email{font-size:11px;font-weight:300;color:#6a6865;text-decoration:none;}
 .foot-email:hover{color:rgba(255,255,255,.5);}
 
 /* MOBILE */
@@ -127,11 +128,13 @@ footer{background:var(--dark);padding:64px 56px 40px;}
   nav{padding:0 24px;}
   .nav-links,.nav-cta{display:none;}
   .mob-btn{display:flex;}
-  .about-hero{padding:68px 24px 56px;min-height:auto;}
+  .about-hero{padding-left:24px;padding-right:24px;padding-bottom:56px;min-height:auto;}
+  .back-link{margin-top:24px;margin-bottom:28px;}
   .knott-what,.why-knott,.cta-section{grid-template-columns:1fr;gap:40px;padding:64px 24px;}
   .founders-inner{grid-template-columns:1fr;}
-  .founders-photo-wrap{border-right:none;border-bottom:1px solid var(--rule);min-height:360px;}
-  .founders-text{padding:52px 24px;}
+  .founders-photo-side{padding:48px 24px;border-right:none;border-bottom:1px solid var(--rule);}
+  .founders-photo-frame{max-width:280px;}
+  .founders-text{padding:48px 24px;}
   .founders-names{grid-template-columns:1fr;gap:16px;}
   .beliefs-header{padding:60px 24px 48px;}
   .beliefs-grid{grid-template-columns:1fr;}
@@ -141,36 +144,33 @@ footer{background:var(--dark);padding:64px 56px 40px;}
   footer{padding:48px 24px 32px;}
   .foot-bottom{flex-direction:column;gap:16px;align-items:flex-start;}
   .foot-nav{flex-wrap:wrap;gap:20px;}
-  .why-logo{max-width:200px;}
 }
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="logo">Knott</a>
   <div class="nav-links">
-    <a href="index.html#services">Services</a>
+    <a href="services.html">Services</a>
     <a href="catalogue.html">Catalogue</a>
     <a href="byknott.html">By KNOTT</a>
-    <a href="index.html#work">Portfolio</a>
+    <a href="index.html#portfolio">Portfolio</a>
     <a href="about.html" class="active">About</a>
   </div>
-  <a href="index.html#contact" class="nav-cta">Book a Consultation</a>
+  <a href="contact.html" class="nav-cta">Book a Consultation</a>
   <button class="mob-btn" id="mobBtn"><span></span><span></span><span></span></button>
 </nav>
 <div class="mob-menu" id="mobMenu">
-  <a href="index.html#services">Services</a>
+  <a href="services.html">Services</a>
   <a href="catalogue.html">Catalogue</a>
   <a href="byknott.html">By KNOTT</a>
-  <a href="index.html#work">Portfolio</a>
+  <a href="index.html#portfolio">Portfolio</a>
   <a href="about.html">About</a>
-  <a href="index.html#contact">Book a Consultation</a>
+  <a href="contact.html">Book a Consultation</a>
 </div>
 
-<!-- HERO -->
 <div class="about-hero">
   <a href="index.html" class="back-link reveal">← Back to Home</a>
   <p class="hero-label reveal d1">About KNOTT</p>
@@ -178,7 +178,6 @@ footer{background:var(--dark);padding:64px 56px 40px;}
   <p class="hero-sub reveal d3">A Toronto-based studio designing the moments that make brands worth remembering.</p>
 </div>
 
-<!-- SECTION 1 — WHAT IS KNOTT -->
 <section class="knott-what">
   <div class="knott-what-left">
     <p class="knott-label reveal">What is KNOTT</p>
@@ -187,14 +186,12 @@ footer{background:var(--dark);padding:64px 56px 40px;}
   <div class="knott-what-right">
     <p class="knott-p reveal">KNOTT is a Customer Journey Design studio based in Toronto. We help companies create <strong>meaningful moments</strong> — the events, the gifts, the experiences — that shape how people feel about a brand long after the moment ends.</p>
     <p class="knott-p reveal d1">We sit at the intersection of design, experience, and brand strategy. Our work is for companies that believe the way they show up for their clients, teams, and partners is not a detail — it is the whole point.</p>
-    <p class="knott-p reveal d2">From a brand activation in a Porsche pit to a curated desk object that lives on someone's table for years — every KNOTT project starts with one question: <strong>how should this feel?</strong></p>
+    <p class="knott-p reveal d2">From a brand activation to a curated desk object that lives on someone's table for years — every KNOTT project starts with one question: <strong>how should this feel?</strong></p>
   </div>
 </section>
 
-<!-- SECTION 2 — WHY A KNOT -->
 <section class="why-knott">
   <div class="why-left reveal">
-    <img src="Untitled_design__1_.png" alt="KNOTT" class="why-logo"/>
     <h2 class="why-tagline">Why a Knot?<br/>Because connection holds.<br/>Because a double knot never slips.</h2>
   </div>
   <div class="why-right">
@@ -204,32 +201,28 @@ footer{background:var(--dark);padding:64px 56px 40px;}
   </div>
 </section>
 
-<!-- FOUNDERS -->
 <section class="founders-section">
   <div class="founders-inner">
-    <div class="founders-photo-wrap">
-      <img src="founders.jpg" alt="Mandana and Catherine — Co-founders of KNOTT"/>
-      <span class="founders-caption">Mandana & Catherine · Toronto, 2024</span>
+    <div class="founders-photo-side">
+      <div class="founders-photo-frame">
+        <img src="founders.jpg" alt="Mandana and Catherine — Co-founders of KNOTT"/>
+      </div>
+      <p class="founders-caption">Mandana & Catherine · Toronto, 2024</p>
     </div>
     <div class="founders-text">
       <h2 class="founders-tagline reveal">Two threads.<br/><span>One KNOTT.</span></h2>
       <p class="founders-bio reveal d1">We met during our MBA in Toronto in 2024 and discovered we shared the same frustration — most brands invest in what they say, not in how they make people feel. We knew there was a better way to build real connections between companies and the people who matter most to them.</p>
-      <p class="founders-bio reveal d2"><strong>Mandana</strong> is an architect by training with a background in design and entrepreneurship. She believes every object and experience should earn its place in someone's life — and that if something doesn't feel considered, it shouldn't exist. She brings the creative vision, the product instinct, and the eye for what makes a moment beautiful.</p>
-      <p class="founders-bio reveal d3"><strong>Catherine</strong> brings over a decade of corporate experience and a deep understanding of what makes relationships between companies and people last. She translates KNOTT's philosophy into experiences that actually work for real businesses — and she asks one question about everything we do: will people remember this?</p>
+      <p class="founders-bio reveal d2"><strong>Mandana</strong> is an architect by training with a background in design and entrepreneurship. She believes every object and experience should earn its place in someone's life. She brings the creative vision, the product instinct, and the eye for what makes a moment beautiful.</p>
+      <p class="founders-bio reveal d3"><strong>Catherine</strong> brings over a decade of corporate experience and a deep understanding of what makes relationships between companies and people last. She asks one question about everything we do: will people remember this?</p>
       <p class="founders-bio reveal d3">Together, they are what a knot is. Two different threads pulled into something that holds. Imagination and execution. Design and strategy. The creative and the commercial.</p>
       <div class="founders-names reveal d3">
-        <div>
-          <p class="founder-name">Mandana</p>
-        </div>
-        <div>
-          <p class="founder-name">Catherine</p>
-        </div>
+        <div><p class="founder-name">Mandana</p></div>
+        <div><p class="founder-name">Catherine</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- BELIEFS -->
 <section class="beliefs">
   <div class="beliefs-header">
     <p class="knott-label reveal">What We Stand For</p>
@@ -254,19 +247,17 @@ footer{background:var(--dark);padding:64px 56px 40px;}
   </div>
 </section>
 
-<!-- CLOSING QUOTE -->
 <div class="closing">
   <p class="closing-q reveal">"We didn't start KNOTT to build a company. We started it because we genuinely believe that the moments between people — the events, the gifts, the experiences — are the most important investments a brand can make."</p>
   <div class="closing-line reveal d1"></div>
   <p class="closing-attr reveal d1">— Mandana & Catherine, Co-founders</p>
 </div>
 
-<!-- CTA -->
 <div class="cta-section">
   <div>
     <h2 class="cta-h reveal">Ready to work<br/>with us?</h2>
     <p class="cta-p reveal d1">Tell us about your next event, gifting project, or brand moment. We'd love to hear from you.</p>
-    <a href="index.html#contact" class="btn-dark reveal d2">Book a Consultation</a>
+    <a href="contact.html" class="btn-dark reveal d2">Book a Consultation</a>
   </div>
   <div class="cta-details reveal d1">
     <div class="cta-row"><span>Email</span><a href="mailto:Connect@knottdesign.ca">Connect@knottdesign.ca</a></div>
@@ -276,16 +267,15 @@ footer{background:var(--dark);padding:64px 56px 40px;}
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="foot-bottom">
     <span class="foot-copy">© 2026 KNOTT. All rights reserved.</span>
     <div class="foot-nav">
       <a href="index.html">Home</a>
-      <a href="index.html#services">Services</a>
+      <a href="services.html">Services</a>
       <a href="catalogue.html">Catalogue</a>
       <a href="byknott.html">By KNOTT</a>
-      <a href="index.html#contact">Contact</a>
+      <a href="contact.html">Contact</a>
     </div>
     <a href="mailto:Connect@knottdesign.ca" class="foot-email">Connect@knottdesign.ca</a>
   </div>
