@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Contact — KNOTT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --w:#F7F5F2;--ww:#FFFFFF;--bk:#0F0F0F;
+  --mid:#888;--lt:#C0BDB8;--rule:#E0DDD8;--dark:#111009;
+  --display:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--w);color:var(--bk);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .9s ease,transform .9s ease;}
+.reveal.in{opacity:1;transform:none;}
+.d1{transition-delay:.12s}.d2{transition-delay:.24s}.d3{transition-delay:.36s}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto 0;z-index:200;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:rgba(247,245,242,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--rule);}
+.logo{font-size:11px;font-weight:400;letter-spacing:10px;text-transform:uppercase;color:var(--bk);text-decoration:none;}
+.nav-links{display:flex;gap:40px;position:absolute;left:50%;transform:translateX(-50%);}
+.nav-links a{font-size:10px;font-weight:300;letter-spacing:2.5px;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--bk);}
+.nav-cta{font-size:10px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:var(--bk);text-decoration:none;border-bottom:1px solid var(--bk);padding-bottom:2px;}
+.mob-btn{display:none;background:none;border:none;cursor:pointer;padding:8px;flex-direction:column;gap:5px;}
+.mob-btn span{display:block;width:22px;height:1px;background:var(--bk);}
+.mob-menu{display:none;position:fixed;top:68px;left:0;right:0;z-index:199;flex-direction:column;background:rgba(247,245,242,.98);border-bottom:1px solid var(--rule);}
+.mob-menu a{font-size:11px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--mid);text-decoration:none;padding:18px 28px;border-bottom:1px solid var(--rule);display:block;}
+.mob-menu a:last-child{color:var(--bk);font-weight:400;border-bottom:none;}
+.mob-menu.open{display:flex;}
+
+/* HERO — split layout */
+.contact-hero{
+  padding-top:68px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  min-height:100vh;
+}
+
+/* LEFT — photo side */
+.hero-photo{
+  position:relative;
+  overflow:hidden;
+  background:#1a1916;
+  min-height:100%;
+}
+.hero-photo-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(160deg,#3a3835 0%,#1a1816 60%,#0e0d0b 100%);
+}
+.hero-photo-overlay{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  justify-content:flex-end;
+  padding:56px;
+}
+.hero-photo-label{font-size:9px;font-weight:300;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:16px;}
+.hero-photo-quote{font-family:var(--display);font-size:clamp(22px,2.2vw,34px);font-weight:400;color:rgba(255,255,255,.75);line-height:1.5;max-width:360px;}
+.hero-photo-line{width:32px;height:1px;background:#B8955A;margin:24px 0 16px;}
+.hero-photo-attr{font-size:9px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#B8955A;}
+
+/* RIGHT — form side */
+.hero-form{
+  background:var(--ww);
+  padding:120px 64px 80px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.form-label{font-size:10px;font-weight:300;letter-spacing:6px;text-transform:uppercase;color:#888;margin-bottom:20px;}
+.form-h{font-family:var(--display);font-size:clamp(32px,3.5vw,52px);font-weight:400;line-height:1.1;color:var(--bk);margin-bottom:12px;}
+.form-sub{font-size:13px;font-weight:300;color:var(--mid);line-height:1.9;margin-bottom:52px;max-width:380px;}
+
+/* FORM FIELDS */
+.f-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 32px;}
+.f-group{margin-bottom:32px;}
+.f-group.full{grid-column:1/-1;}
+.f-label{display:block;font-size:9px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--lt);margin-bottom:12px;}
+.f-input,.f-ta,.f-select{
+  width:100%;background:transparent;border:none;
+  border-bottom:1px solid var(--rule);
+  padding:10px 0;
+  font-family:var(--sans);font-size:13px;font-weight:300;
+  color:var(--bk);outline:none;
+  transition:border-color .3s;
+  appearance:none;
+}
+.f-input::placeholder,.f-ta::placeholder{color:var(--rule);}
+.f-input:focus,.f-ta:focus,.f-select:focus{border-color:var(--bk);}
+.f-ta{resize:none;line-height:1.8;}
+.f-select{cursor:pointer;color:var(--mid);}
+.f-select option{color:var(--bk);}
+.f-submit{
+  margin-top:8px;
+  font-family:var(--sans);font-size:10px;font-weight:400;
+  letter-spacing:3.5px;text-transform:uppercase;
+  color:var(--w);background:var(--bk);
+  border:none;padding:18px 48px;
+  cursor:pointer;transition:background .3s;
+  display:inline-block;
+}
+.f-submit:hover{background:#2a2a2a;}
+
+/* SUCCESS MESSAGE */
+.form-success{
+  display:none;
+  text-align:center;
+  padding:48px 0;
+}
+.form-success-icon{font-size:32px;margin-bottom:16px;}
+.form-success-h{font-family:var(--display);font-size:28px;font-weight:400;color:var(--bk);margin-bottom:12px;}
+.form-success-p{font-size:13px;font-weight:300;color:var(--mid);line-height:1.9;}
+
+/* DETAILS STRIP */
+.contact-strip{background:var(--w);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
+.strip-inner{display:grid;grid-template-columns:repeat(3,1fr);}
+.strip-item{padding:48px 56px;border-right:1px solid var(--rule);}
+.strip-item:last-child{border-right:none;}
+.strip-label{font-size:9px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:var(--lt);margin-bottom:12px;}
+.strip-value{font-family:var(--display);font-size:20px;font-weight:400;color:var(--bk);}
+.strip-value a{color:var(--bk);text-decoration:none;}
+.strip-value a:hover{color:var(--mid);}
+
+/* FOOTER */
+footer{background:var(--dark);padding:64px 56px 40px;}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;}
+.foot-copy{font-size:10px;font-weight:300;color:#2a2825;}
+.foot-nav{display:flex;gap:32px;}
+.foot-nav a{font-size:10px;font-weight:300;letter-spacing:2px;text-transform:uppercase;color:#2e2c28;text-decoration:none;transition:color .25s;}
+.foot-nav a:hover{color:rgba(255,255,255,.4);}
+.foot-email{font-size:10px;font-weight:300;color:#3a3835;text-decoration:none;}
+.foot-email:hover{color:rgba(255,255,255,.5);}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:0 24px;}
+  .nav-links,.nav-cta{display:none;}
+  .mob-btn{display:flex;}
+  .contact-hero{grid-template-columns:1fr;min-height:auto;}
+  .hero-photo{min-height:320px;}
+  .hero-photo-overlay{padding:36px 24px;}
+  .hero-form{padding:64px 24px 56px;}
+  .f-grid{grid-template-columns:1fr;}
+  .strip-inner{grid-template-columns:1fr;}
+  .strip-item{border-right:none;border-bottom:1px solid var(--rule);padding:36px 24px;}
+  .strip-item:last-child{border-bottom:none;}
+  footer{padding:48px 24px 32px;}
+  .foot-bottom{flex-direction:column;gap:16px;align-items:flex-start;}
+  .foot-nav{flex-wrap:wrap;gap:20px;}
+}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">Knott</a>
+  <div class="nav-links">
+    <a href="services.html">Services</a>
+    <a href="catalogue.html">Catalogue</a>
+    <a href="byknott.html">By KNOTT</a>
+    <a href="index.html#portfolio">Portfolio</a>
+    <a href="about.html">About</a>
+  </div>
+  <a href="contact.html" class="nav-cta active">Book a Consultation</a>
+  <button class="mob-btn" id="mobBtn"><span></span><span></span><span></span></button>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <a href="services.html">Services</a>
+  <a href="catalogue.html">Catalogue</a>
+  <a href="byknott.html">By KNOTT</a>
+  <a href="index.html#portfolio">Portfolio</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Book a Consultation</a>
+</div>
+
+<!-- HERO SPLIT -->
+<div class="contact-hero">
+
+  <!-- LEFT — dark photo side -->
+  <div class="hero-photo">
+    <div class="hero-photo-bg"></div>
+    <div class="hero-photo-overlay">
+      <p class="hero-photo-label reveal">Toronto · Canada</p>
+      <p class="hero-photo-quote reveal d1">"We exist to design the moments your clients remember long after the meeting ends."</p>
+      <div class="hero-photo-line reveal d2"></div>
+      <p class="hero-photo-attr reveal d2">Mandana & Catherine</p>
+    </div>
+  </div>
+
+  <!-- RIGHT — form -->
+  <div class="hero-form">
+    <p class="form-label reveal">Get In Touch</p>
+    <h1 class="form-h reveal d1">Let's design<br>something worth<br>feeling.</h1>
+    <p class="form-sub reveal d2">Tell us about your next event, gifting project, or brand moment. We'll be in touch within 24 hours.</p>
+
+    <form id="contactForm" class="reveal d3">
+      <div class="f-grid">
+        <div class="f-group">
+          <label class="f-label">Name</label>
+          <input class="f-input" type="text" placeholder="Your full name" required/>
+        </div>
+        <div class="f-group">
+          <label class="f-label">Company</label>
+          <input class="f-input" type="text" placeholder="Company name"/>
+        </div>
+        <div class="f-group">
+          <label class="f-label">Email</label>
+          <input class="f-input" type="email" placeholder="your@email.com" required/>
+        </div>
+        <div class="f-group">
+          <label class="f-label">Phone</label>
+          <input class="f-input" type="tel" placeholder="+1 (000) 000-0000"/>
+        </div>
+        <div class="f-group full">
+          <label class="f-label">What are you looking for?</label>
+          <select class="f-select">
+            <option value="" disabled selected>Select a service</option>
+            <option>Brand Activation or Event</option>
+            <option>Corporate Gifting Program</option>
+            <option>By KNOTT Products</option>
+            <option>Custom Brand Moment</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="f-group full">
+          <label class="f-label">Tell us more</label>
+          <textarea class="f-ta" rows="5" placeholder="Describe your project, timeline, or idea..."></textarea>
+        </div>
+      </div>
+      <button type="submit" class="f-submit">Send Message</button>
+    </form>
+
+    <div class="form-success" id="formSuccess">
+      <div class="form-success-icon">✦</div>
+      <h2 class="form-success-h">Message received.</h2>
+      <p class="form-success-p">Thank you for reaching out. We'll be in touch within 24 hours.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- DETAILS STRIP -->
+<div class="contact-strip">
+  <div class="strip-inner">
+    <div class="strip-item reveal">
+      <p class="strip-label">Email</p>
+      <p class="strip-value"><a href="mailto:Connect@knottdesign.ca">Connect@knottdesign.ca</a></p>
+    </div>
+    <div class="strip-item reveal d1">
+      <p class="strip-label">Location</p>
+      <p class="strip-value">Toronto, Canada</p>
+    </div>
+    <div class="strip-item reveal d2">
+      <p class="strip-label">Response Time</p>
+      <p class="strip-value">Within 24 hours</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-bottom">
+    <span class="foot-copy">© 2026 KNOTT. All rights reserved.</span>
+    <div class="foot-nav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="catalogue.html">Catalogue</a>
+      <a href="about.html">About</a>
+    </div>
+    <a href="mailto:Connect@knottdesign.ca" class="foot-email">Connect@knottdesign.ca</a>
+  </div>
+</footer>
+
+<script>
+document.getElementById('mobBtn').addEventListener('click',()=>document.getElementById('mobMenu').classList.toggle('open'));
+
+// Reveal
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+setTimeout(()=>{document.querySelectorAll('.reveal').forEach((el,i)=>setTimeout(()=>el.classList.add('in'),100+i*100));},100);
+
+// Form submit
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  this.style.display='none';
+  document.getElementById('formSuccess').style.display='block';
+});
+</script>
+</body>
+</html>
