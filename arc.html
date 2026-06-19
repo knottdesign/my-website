@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ARC — KNOTT</title>
+<meta name="description" content="ARC. Edge of balance. A precision-machined instrument for motion, balance, and a moment of reset. By KNOTT."/>
+<meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#0A0A0A"/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Playfair+Display:wght@400;500&display=swap');
+
+  :root{
+    --white:#FFFFFF;
+    --offwhite:#FAF8F5;
+    --ink:#111111;
+    --grey:#3D3D3D;
+    --taupe:#B8955A;
+    --hair:rgba(0,0,0,0.1);
+    --void:#0A0A0A;
+    --void-soft:#141414;
+    --hair-dark:rgba(255,255,255,0.12);
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--offwhite);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:#111;color:#fff;}
+  .serif{font-family:'Playfair Display',serif;font-weight:400;}
+
+  /* ───────────────── LOAD INTRO ───────────────── */
+  #loadIntro{
+    position:fixed;inset:0;z-index:9999;
+    background:#0A0A0A;
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .8s var(--ease), visibility .8s var(--ease);
+  }
+  #loadIntro.done{opacity:0;visibility:hidden;pointer-events:none;}
+  .intro-line{width:1px;height:0;background:#fff;animation:introGrow 1s var(--ease) forwards;}
+  @keyframes introGrow{0%{height:0;}60%{height:90px;}100%{height:0;}}
+  body.loading{overflow:hidden;}
+
+  /* ───────────────── NAV ───────────────── */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:200;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 48px;
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    color:#fff;
+    transition:background .5s var(--ease), color .5s var(--ease), border-color .5s var(--ease);
+  }
+  nav.on-light{
+    background:rgba(255,255,255,0.88);
+    border-bottom:1px solid var(--hair);
+    color:var(--ink);
+  }
+  .nav-logo{font-size:14px;font-weight:600;letter-spacing:2px;}
+  .nav-links{display:flex;gap:32px;font-size:12px;letter-spacing:1px;text-transform:uppercase;}
+  .nav-links a{opacity:0.65;transition:opacity .25s var(--ease);}
+  .nav-links a:hover{opacity:1;}
+  .nav-cta{font-size:12px;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:2px;}
+  @media (max-width:900px){.nav-links{display:none;}nav{padding:18px 24px;}}
+
+  /* ───────────────── REVEAL ───────────────── */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ───────────────── HERO ───────────────── */
+  .hero{
+    position:relative;
+    height:100vh;
+    min-height:600px;
+    width:100%;
+    overflow:hidden;
+    background:#000;
+    display:flex;
+    align-items:flex-end;
+  }
+  .hero video, .hero img.poster{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    opacity:0.92;
+    animation:kenburns 30s ease-in-out infinite alternate;
+  }
+  @keyframes kenburns{
+    0%{transform:scale(1.02) translate(0,0);}
+    100%{transform:scale(1.22) translate(-1.5%,-1.5%);}
+  }
+  .hero::after{
+    content:'';
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.08) 35%, rgba(0,0,0,0.6) 100%);
+    pointer-events:none;
+  }
+  .hero-content{
+    position:relative;z-index:2;
+    width:100%;
+    padding:0 48px 96px;
+    max-width:1240px;
+    margin:0 auto;
+    color:#fff;
+  }
+  .hero-eyebrow{
+    font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--taupe);margin-bottom:22px;
+    opacity:0;animation:fadeUp 1s var(--ease) 0.3s forwards;
+  }
+  .hero h1{font-size:clamp(42px,7.4vw,92px);line-height:1.04;letter-spacing:-0.01em;margin-bottom:22px;overflow:hidden;}
+  .hero h1 .hword{
+    display:inline-block;filter:blur(10px);opacity:0;transform:translateY(20px);
+    animation:focusPull 1.1s var(--ease) forwards;
+  }
+  @keyframes focusPull{to{filter:blur(0);opacity:1;transform:translateY(0);}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+  .hero-sub{
+    font-size:17px;font-weight:300;color:rgba(255,255,255,0.78);max-width:420px;line-height:1.7;
+    opacity:0;animation:fadeUp 1s var(--ease) 1.1s forwards;
+  }
+  .hero-rule{
+    width:44px;height:1px;background:var(--taupe);margin-bottom:24px;
+    transform:scaleX(0);transform-origin:left;animation:ruleGrow 1s var(--ease) 0.9s forwards;
+  }
+  @keyframes ruleGrow{to{transform:scaleX(1);}}
+  .scroll-cue{
+    position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+    z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;
+    color:rgba(255,255,255,0.6);font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  }
+  .scroll-cue .line{width:1px;height:34px;background:rgba(255,255,255,0.35);position:relative;overflow:hidden;}
+  .scroll-cue .line::after{
+    content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:#fff;
+    animation:scrollDrip 1.8s ease-in-out infinite;
+  }
+  @keyframes scrollDrip{0%{top:-100%;}50%{top:0;}100%{top:100%;}}
+  @media (max-width:768px){.hero-content{padding:0 24px 64px;}}
+
+  /* ───────────────── QUIET TEXT BEAT (light, asymmetric) ───────────────── */
+  .quiet{
+    max-width:1240px;margin:0 auto;padding:200px 48px;
+    display:grid;grid-template-columns:280px 1fr;gap:64px;
+  }
+  .quiet .label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);}
+  .quiet-lines p{
+    font-size:clamp(26px,3.8vw,46px);font-weight:300;line-height:1.4;color:var(--ink);
+    max-width:760px;
+  }
+  .quiet-lines p span{transition:color .4s linear;}
+  .quiet-lines .dim{color:#C2C2C2;}
+  @media (max-width:900px){
+    .quiet{grid-template-columns:1fr;gap:24px;padding:140px 24px;}
+  }
+
+  /* ───────────────── DARK STAGE ───────────────── */
+  .stage{
+    position:relative;
+    background:var(--void);
+    color:#fff;
+    padding:140px 48px;
+    overflow:hidden;
+  }
+  .stage-inner{
+    max-width:1240px;margin:0 auto;
+    display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;
+  }
+  .stage-inner.reverse{grid-template-columns:1fr 1fr;}
+  .stage-inner.reverse .stage-img{order:2;}
+  .stage-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-bottom:20px;}
+  .stage h2{font-size:clamp(28px,3.6vw,44px);line-height:1.15;margin-bottom:20px;}
+  .stage p{font-size:16px;font-weight:300;color:rgba(255,255,255,0.62);line-height:1.7;max-width:420px;}
+  .stage-img{position:relative;border-radius:4px;overflow:hidden;}
+  .stage-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.8s var(--ease);transform:scale(1.06);}
+  .stage-img.in img{transform:scale(1);}
+  @media (max-width:900px){
+    .stage{padding:90px 24px;}
+    .stage-inner, .stage-inner.reverse{grid-template-columns:1fr;gap:36px;}
+    .stage-inner.reverse .stage-img{order:0;}
+  }
+
+  /* ───────────────── WHERE IT FITS (light triptych) ───────────────── */
+  .fits{max-width:1240px;margin:0 auto;padding:140px 48px;}
+  .fits-head{text-align:center;margin-bottom:64px;}
+  .fits-head .label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-bottom:18px;}
+  .fits-head h2{font-size:clamp(28px,4vw,46px);font-weight:400;}
+  .fits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;}
+  .fits-item{text-align:center;}
+  .fits-num{font-size:12px;color:var(--taupe);letter-spacing:2px;margin-bottom:14px;}
+  .fits-item p{font-size:18px;font-weight:300;color:var(--grey);line-height:1.5;}
+  @media (max-width:768px){
+    .fits{padding:90px 24px;}
+    .fits-grid{grid-template-columns:1fr;gap:36px;}
+  }
+
+  /* ───────────────── STORY — pinned scroll journey ───────────────── */
+  .story-wrap{
+    position:relative;
+    background:var(--void);
+  }
+  .story-stage{
+    position:sticky;
+    top:0;
+    height:100vh;
+    width:100%;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+  }
+  .story-media{
+    position:absolute;inset:0;
+  }
+  .story-media img, .story-media video{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:opacity 1s var(--ease);
+  }
+  .story-media img.active, .story-media video.active{opacity:1;}
+  .story-media::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(90deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.15) 100%);
+  }
+  .story-text-col{
+    position:relative;z-index:2;
+    width:100%;max-width:1240px;margin:0 auto;
+    padding:0 48px;
+  }
+  .story-beat-text{
+    max-width:460px;
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity .6s var(--ease), transform .6s var(--ease);
+    position:absolute;
+  }
+  .story-beat-text.active{opacity:1;transform:translateY(0);position:relative;}
+  .story-beat-num{font-size:11px;letter-spacing:3px;color:var(--taupe);margin-bottom:18px;}
+  .story-beat-text h3{color:#fff;font-size:clamp(26px,3.4vw,40px);line-height:1.2;margin-bottom:16px;}
+  .story-beat-text p{color:rgba(255,255,255,0.62);font-size:16px;font-weight:300;line-height:1.7;}
+  .story-progress{
+    position:absolute;right:48px;top:50%;transform:translateY(-50%);
+    z-index:3;display:flex;flex-direction:column;gap:14px;
+  }
+  .story-progress .dot{
+    width:6px;height:6px;border-radius:50%;
+    background:rgba(255,255,255,0.25);
+    transition:background .4s var(--ease), transform .4s var(--ease);
+  }
+  .story-progress .dot.active{background:var(--taupe);transform:scale(1.6);}
+  @media (max-width:900px){
+    .story-text-col{padding:0 24px;}
+    .story-progress{display:none;}
+    .story-media::after{background:linear-gradient(180deg, rgba(0,0,0,0.85) 10%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.35) 100%);}
+  }
+
+  /* ───────────────── SPECS / PRECISION (light) ───────────────── */
+  .specs{
+    max-width:1240px;margin:0 auto;padding:140px 48px;
+    border-top:1px solid var(--hair);
+  }
+  .specs-head{text-align:center;margin-bottom:64px;}
+  .specs-head .label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-bottom:18px;}
+  .specs-head h2{font-size:clamp(28px,4vw,46px);font-weight:400;}
+  .specs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--hair);}
+  .specs-item{padding:32px 24px;border-bottom:1px solid var(--hair);border-right:1px solid var(--hair);}
+  .specs-item:last-child{border-right:none;}
+  .specs-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-bottom:10px;}
+  .specs-value{font-size:16px;font-weight:400;}
+  .specs-value small{display:block;font-size:12px;font-weight:300;color:var(--grey);margin-top:4px;}
+  @media (max-width:768px){
+    .specs{padding:90px 24px;}
+    .specs-grid{grid-template-columns:1fr 1fr;}
+  }
+
+  /* ───────────────── FINISHES ───────────────── */
+  .finishes{max-width:1240px;margin:0 auto;padding:0 48px 140px;}
+  .finishes-img{border-radius:6px;overflow:hidden;}
+  .finishes-img img{width:100%;display:block;}
+  .finishes-caption{margin-top:18px;text-align:center;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--taupe);}
+  @media (max-width:768px){.finishes{padding:0 24px 90px;}}
+
+  /* ───────────────── CTA ───────────────── */
+  .cta{
+    position:relative;
+    background:var(--void);
+    color:#fff;
+    text-align:center;
+    padding:140px 48px;
+    overflow:hidden;
+  }
+  .cta-inner{position:relative;z-index:2;max-width:600px;margin:0 auto;}
+  .cta .label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-bottom:22px;}
+  .cta h2{font-size:clamp(30px,4.4vw,52px);margin-bottom:18px;}
+  .cta p{font-size:16px;font-weight:300;color:rgba(255,255,255,0.6);margin-bottom:44px;}
+  .cta-form{display:flex;gap:0;max-width:420px;margin:0 auto 28px;border:1px solid rgba(255,255,255,0.25);border-radius:2px;overflow:hidden;}
+  .cta-form input{
+    flex:1;background:transparent;border:none;padding:16px 18px;color:#fff;font-family:'Inter',sans-serif;font-size:14px;font-weight:300;
+  }
+  .cta-form input::placeholder{color:rgba(255,255,255,0.4);}
+  .cta-form input:focus{outline:none;}
+  .cta-form button{
+    background:#fff;color:#111;border:none;padding:0 26px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;
+    transition:background .25s var(--ease);
+  }
+  .cta-form button:hover{background:var(--taupe);color:#fff;}
+  .cta-kick{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.7);
+    border-bottom:1px solid rgba(255,255,255,0.25);padding-bottom:4px;
+    transition:color .25s var(--ease), border-color .25s var(--ease);
+  }
+  .cta-kick:hover{color:#fff;border-color:#fff;}
+  @media (max-width:768px){
+    .cta{padding:100px 24px;}
+    .cta-form{flex-direction:column;}
+    .cta-form button{padding:14px;}
+  }
+
+  .divider{
+    max-width:1240px;margin:0 auto;
+    height:1px;
+  }
+  .divider-light{background:linear-gradient(90deg, transparent, var(--hair) 50%, transparent);}
+  .divider-dark{background:linear-gradient(90deg, transparent, var(--hair-dark) 50%, transparent);}
+
+  /* ───────────────── RIBBON GALLERY ───────────────── */
+  .ribbon-wrap{
+    background:var(--offwhite);
+    padding:120px 0;
+    overflow:hidden;
+  }
+  .ribbon-head{max-width:1240px;margin:0 auto 56px;padding:0 48px;text-align:center;}
+  .ribbon-head .label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-bottom:18px;}
+  .ribbon-head h2{font-size:clamp(26px,3.6vw,40px);font-weight:400;}
+  .ribbon-track{
+    display:flex;
+    align-items:center;
+    gap:24px;
+    width:max-content;
+    animation:ribbonSlide 38s linear infinite;
+  }
+  .ribbon-wrap:hover .ribbon-track{animation-play-state:paused;}
+  @keyframes ribbonSlide{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  .ribbon-item{
+    flex-shrink:0;
+    border-radius:4px;
+    overflow:hidden;
+    background:#eee;
+  }
+  .ribbon-item img{display:block;width:100%;height:100%;object-fit:cover;}
+  .ribbon-item.size-lg{width:380px;height:480px;}
+  .ribbon-item.size-md{width:300px;height:380px;}
+  .ribbon-item.size-sm{width:240px;height:300px;}
+  .ribbon-item.size-wide{width:420px;height:280px;}
+  @media (max-width:768px){
+    .ribbon-wrap{padding:80px 0;}
+    .ribbon-item.size-lg{width:240px;height:300px;}
+    .ribbon-item.size-md{width:200px;height:260px;}
+    .ribbon-item.size-sm{width:160px;height:200px;}
+    .ribbon-item.size-wide{width:260px;height:180px;}
+  }
+
+  footer{
+    padding:36px 48px;border-top:1px solid rgba(255,255,255,0.1);
+    background:var(--void);color:rgba(255,255,255,0.55);
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:12px;flex-wrap:wrap;gap:16px;
+  }
+  .footer-links{display:flex;gap:24px;}
+  .footer-links a:hover{color:#fff;}
+</style>
+</head>
+<body class="loading">
+
+<div id="loadIntro"><div class="intro-line"></div></div>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">KNOTT</a>
+  <div class="nav-links">
+    <a href="services.html">Services</a>
+    <a href="catalogue.html">Catalogue</a>
+    <a href="byknott.html">By KNOTT</a>
+    <a href="about.html">About</a>
+  </div>
+  <a href="contact.html" class="nav-cta">Book a Consultation</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <video autoplay muted loop playsinline poster="arc-hero-poster.jpg">
+    <source src="arc-hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-content">
+    <div class="hero-eyebrow">By KNOTT — Arc</div>
+    <div class="hero-rule"></div>
+    <h1 class="serif" id="heroHeadline">Reclaim your focus.</h1>
+    <p class="hero-sub">A physical reset, through motion and balance.</p>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><div class="line"></div></div>
+</section>
+
+<!-- THE PROBLEM — quiet beat -->
+<section class="quiet">
+  <div class="label reveal">The problem</div>
+  <div class="quiet-lines serif" id="quietLines">
+    <p>Your attention is constantly pulled — notifications, tabs, noise. It doesn't feel like yours anymore.</p>
+  </div>
+</section>
+
+<!-- THE ANSWER — dark stage -->
+<section class="stage">
+  <div class="stage-inner">
+    <div class="stage-text">
+      <div class="stage-eyebrow reveal">The answer</div>
+      <h2 class="serif reveal">Arc brings it back.</h2>
+      <p class="reveal">Motion. Balance. Control. A steady motion that draws your focus in — quieting the noise, bringing things back into place.</p>
+    </div>
+    <div class="stage-img reveal">
+      <img src="arc-duo-black.jpg" alt="ARC spinning instrument, two finishes"/>
+    </div>
+  </div>
+</section>
+
+<!-- NOT A TYPICAL SPINNER — dark stage, reversed -->
+<section class="stage" style="padding-top:0;">
+  <div class="stage-inner reverse">
+    <div class="stage-text">
+      <div class="stage-eyebrow reveal">Not a typical spinner</div>
+      <h2 class="serif reveal">It moves along its edge.</h2>
+      <p class="reveal">Not a repeat of the spinner you know — a different path. A form that orbits along its own edge: grounded, balanced, controlled. Precise, and a little unexpected.</p>
+    </div>
+    <div class="stage-img reveal">
+      <img src="arc-demo-funnel.jpg" alt="ARC base and instrument detail"/>
+    </div>
+  </div>
+</section>
+
+<!-- WHERE IT FITS -->
+<section class="fits">
+  <div class="fits-head">
+    <div class="label reveal">Where it fits</div>
+    <h2 class="serif reveal">A small ritual, wherever you need it.</h2>
+  </div>
+  <div class="fits-grid">
+    <div class="fits-item reveal">
+      <div class="fits-num">01</div>
+      <p>On your desk.</p>
+    </div>
+    <div class="fits-item reveal">
+      <div class="fits-num">02</div>
+      <p>Between tasks.</p>
+    </div>
+    <div class="fits-item reveal">
+      <div class="fits-num">03</div>
+      <p>When everything feels too loud.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider divider-light"></div>
+
+<!-- STORY — pinned scroll journey -->
+<section class="story-wrap" id="storyWrap" style="height:500vh;">
+  <div class="story-stage">
+    <div class="story-media" id="storyMedia">
+      <video class="story-frame active" data-beat="0" src="arc-story-motion.mp4" poster="arc-story-motion-poster.jpg" autoplay muted loop playsinline></video>
+      <video class="story-frame" data-beat="1" src="arc-story-motion.mp4" poster="arc-story-motion-poster.jpg" autoplay muted loop playsinline></video>
+      <img class="story-frame" data-beat="2" src="arc-trio-finishes.jpg" alt="ARC form and geometry"/>
+      <img class="story-frame" data-beat="3" src="arc-mono-bw.jpg" alt="ARC at rest"/>
+      <img class="story-frame" data-beat="4" src="arc-precision.jpg" alt="ARC precision detail"/>
+    </div>
+    <div class="story-text-col">
+      <div class="story-beat-text active" data-beat="0">
+        <div class="story-beat-num">01 — Story of Arc</div>
+        <h3 class="serif">It began with a familiar motion.</h3>
+        <p>We started with a feeling almost everyone knows — the brief balance of a spinning coin. A small moment of motion, steady before it falls.</p>
+      </div>
+      <div class="story-beat-text" data-beat="1">
+        <div class="story-beat-num">02 — Story of Arc</div>
+        <h3 class="serif">Then we followed the edge.</h3>
+        <p>Not to repeat the spinner, but to find a different path. A form that moves along its edge — grounded, balanced, controlled.</p>
+      </div>
+      <div class="story-beat-text" data-beat="2">
+        <div class="story-beat-num">03 — Story of Arc</div>
+        <h3 class="serif">Form took shape through balance.</h3>
+        <p>Guided by weight and geometry, refined again and again. Each curve considered — until motion and form aligned.</p>
+      </div>
+      <div class="story-beat-text" data-beat="3">
+        <div class="story-beat-num">04 — Story of Arc</div>
+        <h3 class="serif">It returns to stillness.</h3>
+        <p>A place to settle. A moment to reset. Not just motion — but where it comes to rest.</p>
+      </div>
+      <div class="story-beat-text" data-beat="4">
+        <div class="story-beat-num">05 — Story of Arc</div>
+        <h3 class="serif">Precision, in every detail.</h3>
+        <p>Aerospace-grade aluminum. Edge-orbit motion. Balanced geometry. Crafted for controlled movement.</p>
+      </div>
+    </div>
+    <div class="story-progress" id="storyProgress">
+      <div class="dot active" data-beat="0"></div>
+      <div class="dot" data-beat="1"></div>
+      <div class="dot" data-beat="2"></div>
+      <div class="dot" data-beat="3"></div>
+      <div class="dot" data-beat="4"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECS -->
+<section class="specs">
+  <div class="specs-head">
+    <div class="label reveal">Specification</div>
+    <h2 class="serif reveal">Crafted for controlled movement.</h2>
+  </div>
+  <div class="specs-grid reveal">
+    <div class="specs-item">
+      <div class="specs-label">Material</div>
+      <div class="specs-value">Aerospace-grade aluminum<small>Precision-machined</small></div>
+    </div>
+    <div class="specs-item">
+      <div class="specs-label">Motion</div>
+      <div class="specs-value">Edge-orbit<small>Balanced geometry</small></div>
+    </div>
+    <div class="specs-item">
+      <div class="specs-label">Finishes</div>
+      <div class="specs-value">Silver · Brass · Black<small>Brushed metal</small></div>
+    </div>
+    <div class="specs-item">
+      <div class="specs-label">Origin</div>
+      <div class="specs-value">Designed in Toronto<small>By KNOTT</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINISHES -->
+<section class="finishes">
+  <div class="finishes-img reveal">
+    <img src="arc-trio-finishes.jpg" alt="ARC in three finishes — silver, brass, black"/>
+  </div>
+  <div class="finishes-caption reveal">Silver · Brass · Black</div>
+</section>
+
+<div class="divider divider-light"></div>
+
+<!-- CLOSING -->
+<section class="cta">
+  <div class="cta-inner">
+    <div class="label reveal">By KNOTT</div>
+    <h2 class="serif reveal">A moment, machined into motion.</h2>
+    <p class="reveal">ARC is available by inquiry. Reach out to learn more, or to arrange a private viewing.</p>
+    <a href="contact.html" class="cta-kick reveal">Book a Consultation →</a>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 KNOTT. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="byknott.html">By KNOTT</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+<script>
+  document.documentElement.classList.add('js-ready');
+
+  /* LOAD INTRO */
+  let introDone=false;
+  function finishIntro(){
+    if(introDone) return; introDone=true;
+    document.getElementById('loadIntro').classList.add('done');
+    document.body.classList.remove('loading');
+    startHeroReveal();
+  }
+  window.addEventListener('load', ()=> setTimeout(finishIntro, 400));
+  setTimeout(finishIntro, 1600);
+
+  /* HERO WORD REVEAL */
+  function startHeroReveal(){
+    const h1 = document.getElementById('heroHeadline');
+    if(!h1) return;
+    const words = h1.textContent.split(' ');
+    h1.innerHTML = words.map((w,i)=>{
+      return `<span class="hword" style="animation-delay:${(i*0.07+0.5).toFixed(2)}s">${w}</span>`;
+    }).join(' ');
+  }
+
+  /* SCROLL REVEALS */
+  const reveals = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:0.15, rootMargin:'0px 0px -60px 0px'});
+    reveals.forEach((el,i)=>{ el.style.transitionDelay=(i%3)*0.06+'s'; io.observe(el); });
+  } else {
+    reveals.forEach(el=>el.classList.add('in'));
+  }
+
+  /* NAV: swap to light style when over a light (non-void) section */
+  const nav = document.getElementById('mainNav');
+  const lightSections = document.querySelectorAll('.quiet, .fits, .specs, .finishes');
+  function updateNav(){
+    const navH = nav.offsetHeight;
+    let onLight = false;
+    lightSections.forEach(sec=>{
+      const r = sec.getBoundingClientRect();
+      if(r.top <= navH && r.bottom >= navH) onLight = true;
+    });
+    nav.classList.toggle('on-light', onLight);
+  }
+  window.addEventListener('scroll', updateNav, {passive:true});
+  updateNav();
+
+  /* QUIET LINES — word-by-word scroll lighting */
+  const quietLines = document.getElementById('quietLines');
+  let quietWords = [];
+  if(quietLines){
+    const p = quietLines.querySelector('p');
+    const text = p.textContent;
+    p.innerHTML = text.split(' ').map(w => `<span class="dim">${w}</span>`).join(' ');
+    quietWords = p.querySelectorAll('span');
+  }
+  function updateQuiet(){
+    if(!quietWords.length) return;
+    const rect = quietLines.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const start = vh * 0.85;
+    const end = vh * 0.3;
+    let progress = (start - rect.top) / (start - end);
+    progress = Math.max(0, Math.min(1, progress));
+    const lit = Math.floor(progress * quietWords.length);
+    quietWords.forEach((w,i)=> w.classList.toggle('dim', i >= lit));
+  }
+  window.addEventListener('scroll', updateQuiet, {passive:true});
+  window.addEventListener('resize', updateQuiet);
+  updateQuiet();
+  const storyWrap = document.getElementById('storyWrap');
+  const frames = document.querySelectorAll('.story-frame');
+  const beatTexts = document.querySelectorAll('.story-beat-text');
+  const dots = document.querySelectorAll('.story-progress .dot');
+  const BEATS = frames.length;
+
+  function updateStory(){
+    const rect = storyWrap.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const total = storyWrap.offsetHeight - vh;
+    if(total <= 0) return;
+    let progress = (-rect.top) / total;
+    progress = Math.max(0, Math.min(1, progress));
+    let beat = Math.floor(progress * BEATS);
+    if(beat >= BEATS) beat = BEATS - 1;
+
+    frames.forEach(f=>{
+      const active = parseInt(f.dataset.beat,10) === beat;
+      f.classList.toggle('active', active);
+      if(f.tagName === 'VIDEO' && active){ f.play().catch(()=>{}); }
+    });
+    beatTexts.forEach(t=> t.classList.toggle('active', parseInt(t.dataset.beat,10) === beat));
+    dots.forEach(d=> d.classList.toggle('active', parseInt(d.dataset.beat,10) === beat));
+  }
+  window.addEventListener('scroll', updateStory, {passive:true});
+  window.addEventListener('resize', updateStory);
+  updateStory();
+</script>
+
+</body>
+</html>
