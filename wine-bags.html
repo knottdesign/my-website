@@ -10,231 +10,145 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;overflow-x:hidden;}
-body{
-  background:#F4F5F5;
-  color:#0C0C0A;
-  font-family:'Inter',system-ui,sans-serif;
-  font-weight:300;
-  -webkit-font-smoothing:antialiased;
-}
-@media(prefers-reduced-motion:reduce){
-  *{transition:none!important;animation:none!important;}
-}
+body{background:#F4F5F5;color:#0C0C0A;font-family:'Inter',system-ui,sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:500;
-  height:60px;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 48px;
-  transition:background .4s,border-color .4s;
-  border-bottom:1px solid transparent;
-}
-nav.lit{
-  background:rgba(244,245,245,.95);
-  backdrop-filter:blur(12px);
-  border-bottom-color:#E2E5E7;
-}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;border-bottom:1px solid transparent;transition:background .4s,border-color .4s;}
+nav.lit{background:rgba(244,245,245,.96);backdrop-filter:blur(12px);border-bottom-color:#E2E5E7;}
 .n-logo{font-size:10px;font-weight:400;letter-spacing:9px;text-transform:uppercase;color:#0C0C0A;text-decoration:none;}
 .n-mid{position:absolute;left:50%;transform:translateX(-50%);font-family:'Playfair Display',serif;font-size:12px;font-style:italic;color:#666A6E;}
-.n-cta{font-size:9px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#666A6E;text-decoration:none;border-bottom:1px solid #AAAFB4;padding-bottom:1px;transition:color .25s,border-color .25s;}
-.n-cta:hover{color:#0C0C0A;border-color:#0C0C0A;}
+.n-cta{font-size:9px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#666A6E;text-decoration:none;border-bottom:1px solid #AAAFB4;padding-bottom:1px;}
 @media(max-width:700px){nav{padding:0 20px;}.n-mid{display:none;}}
 
-/* ══════════════════════════════════════════════════
-   THE ONE SCROLL CONTAINER
-   ══════════════════════════════════════════════════
-   Architecture:
-   - #story         : tall scroll container (N × 100vh)
-   - #viewport      : position:sticky, 100vh, clips everything
-   - Inside viewport, 4 layers stacked with position:absolute:
-       L1 #layer-bg   : large slow-moving texture/material images
-       L2 #layer-imgs : portrait product/craft cards at medium speed
-       L3 #layer-text : editorial text panels, fade in/out per chapter
-       L4 #layer-ui   : fixed nav-hint, progress dot
-   JS reads scroll progress through #story and drives
-   transforms on every layer independently.
-══════════════════════════════════════════════════ */
-
-#story{
-  position:relative;
-  /* 7 chapters × 100vh = 700vh total scroll */
-  height:700vh;
-}
-#viewport{
-  position:sticky;
-  top:0;
-  height:100vh;
-  width:100%;
-  overflow:hidden;
+/* ══════════════════════════════
+   TEXT SECTIONS — clean, empty
+══════════════════════════════ */
+.txt{
+  padding:140px 52px 120px;
   background:#F4F5F5;
 }
-
-/* ── LAYER 1 — background texture images (slow) ── */
-#layer-bg{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-}
-.bg-img{
-  position:absolute;
-  overflow:hidden;
-  opacity:0;
-  transition:opacity 1.2s ease;
-  will-change:transform,opacity;
-}
-.bg-img img{
-  width:100%;height:100%;
-  object-fit:cover;
-  display:block;
-}
-.bg-img.visible{opacity:1;}
-
-/* ── LAYER 2 — portrait gallery cards (medium speed) ── */
-#layer-imgs{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-}
-.img-card{
-  position:absolute;
-  overflow:hidden;
-  background:#D8DADB;
-  will-change:transform,opacity;
-  opacity:0;
-  transition:opacity .8s ease;
-}
-.img-card.visible{opacity:1;}
-.img-card img{
-  width:100%;height:100%;
-  object-fit:cover;
-  display:block;
-}
-.img-card-lbl{
-  position:absolute;bottom:10px;left:12px;
-  font-size:8px;font-weight:300;letter-spacing:3px;text-transform:uppercase;
-  color:rgba(0,0,0,.3);
-}
-
-/* ── LAYER 3 — text panels ── */
-#layer-text{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:20;
-}
-.txt-panel{
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:80px 40px 40px;
-  opacity:0;
-  transform:translateY(16px);
-  transition:opacity .9s ease,transform .9s ease;
-  pointer-events:none;
-}
-.txt-panel.show{
-  opacity:1;
-  transform:translateY(0);
-}
-.txt-panel.hide{
-  opacity:0;
-  transform:translateY(-16px);
-}
-.tp-eye{
-  font-size:9px;font-weight:300;letter-spacing:6px;text-transform:uppercase;
-  color:#9C8A6E;margin-bottom:18px;
-}
-.tp-h{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(32px,5vw,72px);
-  font-weight:400;line-height:1.05;
-  color:#0C0C0A;
-  margin-bottom:14px;
-}
-.tp-h em{font-style:italic;color:#9C8A6E;}
-.tp-sub{
-  font-size:13px;font-weight:300;
-  color:#666A6E;
-  letter-spacing:.04em;
-  max-width:360px;
-  margin-bottom:20px;
-}
-.tp-rule{width:28px;height:1px;background:#9C8A6E;margin:0 auto 20px;}
-.tp-specs{
-  display:flex;gap:32px;justify-content:center;flex-wrap:wrap;
-}
-.tp-spec{text-align:center;}
-.tp-spec-lbl{font-size:8px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:#AAAFB4;margin-bottom:5px;}
-.tp-spec-val{font-size:12px;font-weight:300;color:#0C0C0A;}
-
-/* model detail panels — left-aligned */
-.txt-panel.model-panel{
-  align-items:flex-start;
-  text-align:left;
-  padding:80px 10% 40px 8%;
-}
-.mp-num{font-size:9px;font-weight:300;letter-spacing:5px;text-transform:uppercase;color:#9C8A6E;margin-bottom:12px;}
-.mp-name{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,52px);font-weight:400;color:#0C0C0A;margin-bottom:10px;}
-.mp-name em{font-style:italic;}
-.mp-desc{font-size:13px;font-weight:300;color:#666A6E;line-height:1.9;max-width:360px;margin-bottom:20px;}
-.mp-tag{
-  display:inline-block;
-  font-size:8px;font-weight:300;letter-spacing:3px;text-transform:uppercase;
-  color:#9C8A6E;border:1px solid #9C8A6E;
-  padding:6px 14px;
-}
-
-/* scroll hint */
-.scroll-hint{
-  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  z-index:30;pointer-events:none;
-  transition:opacity .6s;
-}
-.scroll-hint.gone{opacity:0;}
-.sh-bar{width:1px;height:44px;background:linear-gradient(to bottom,#9C8A6E,transparent);animation:spulse 2s ease-in-out infinite;}
+.txt.center{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;}
+.txt-eye{font-size:9px;font-weight:300;letter-spacing:6px;text-transform:uppercase;color:#9C8A6E;margin-bottom:20px;}
+.txt-h{font-family:'Playfair Display',serif;font-size:clamp(36px,5.5vw,76px);font-weight:400;line-height:1.04;color:#0C0C0A;margin-bottom:14px;}
+.txt-h em{font-style:italic;color:#9C8A6E;}
+.txt-s{font-size:13px;font-weight:300;color:#AAAFB4;letter-spacing:.05em;margin-top:6px;}
+.txt-rule{width:28px;height:1px;background:#9C8A6E;margin:28px auto;}
+.txt-specs{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+.sp-l{font-size:8px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:#AAAFB4;margin-bottom:5px;}
+.sp-v{font-size:12px;font-weight:300;color:#0C0C0A;}
+.scroll-hint{margin-top:48px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.sh-bar{width:1px;height:44px;background:linear-gradient(to bottom,#9C8A6E,transparent);animation:pulse 2s ease-in-out infinite;}
 .sh-txt{font-size:7px;letter-spacing:4px;text-transform:uppercase;color:#AAAFB4;}
-@keyframes spulse{0%,100%{opacity:.3;transform:scaleY(.6);}50%{opacity:1;transform:scaleY(1);}}
+@keyframes pulse{0%,100%{opacity:.3;transform:scaleY(.6);}50%{opacity:1;transform:scaleY(1);}}
 
-/* progress dots */
-.progress-dots{
-  position:absolute;right:28px;top:50%;transform:translateY(-50%);
-  display:flex;flex-direction:column;gap:8px;
-  z-index:30;pointer-events:none;
+.txt.two-col{
+  display:grid;grid-template-columns:1fr 2fr;gap:80px;
+  align-items:start;min-height:auto;
 }
-.pdot{
-  width:4px;height:4px;border-radius:50%;
-  background:rgba(156,138,110,.25);
-  transition:background .4s,transform .4s;
+.txt-label{font-size:9px;font-weight:300;letter-spacing:6px;text-transform:uppercase;color:#AAAFB4;padding-top:4px;}
+.txt-body-h{font-family:'Playfair Display',serif;font-size:clamp(22px,2.6vw,36px);font-weight:400;line-height:1.25;color:#0C0C0A;margin-bottom:22px;}
+.txt-body-h em{font-style:italic;color:#9C8A6E;}
+.txt-body-p{font-size:14px;font-weight:300;color:#666A6E;line-height:2;margin-bottom:14px;max-width:480px;}
+.txt-body-rule{width:28px;height:1px;background:#9C8A6E;margin:28px 0;}
+.specs-left{display:flex;gap:36px;flex-wrap:wrap;}
+@media(max-width:700px){
+  .txt{padding:80px 20px;}
+  .txt.two-col{grid-template-columns:1fr;gap:24px;}
 }
-.pdot.on{background:#9C8A6E;transform:scale(1.4);}
 
-/* ── CTA at end of page ── */
-.end-cta{
+/* ══════════════════════════════════════════
+   GALLERY DIVIDER
+   ──────────────────────────────────────────
+   A grid of portrait images.
+   As you scroll INTO the section, each image
+   slowly ZOOMS IN (scale 1.0 → 1.08).
+   The grid itself does NOT move — only the
+   image inside each cell scales.
+   This is the Maison Boursier zoom mechanic.
+══════════════════════════════════════════ */
+.gallery-divider{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  padding:10px;
   background:#F4F5F5;
-  border-top:1px solid #E2E5E7;
-  padding:96px 52px;
-  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
 }
-.end-h{font-family:'Playfair Display',serif;font-size:clamp(26px,3.2vw,48px);font-weight:400;line-height:1.1;color:#0C0C0A;}
-.end-h em{font-style:italic;color:#9C8A6E;}
-.end-p{font-size:14px;font-weight:300;color:#666A6E;line-height:1.9;margin-bottom:36px;max-width:360px;}
-.btn-d{display:inline-block;font-size:9px;font-weight:400;letter-spacing:3.5px;text-transform:uppercase;color:#F4F5F5;background:#2C2B28;padding:16px 40px;text-decoration:none;transition:background .3s;margin-right:18px;margin-bottom:10px;}
-.btn-d:hover{background:#3d3c38;}
-.btn-g{display:inline-block;font-size:9px;font-weight:300;letter-spacing:2.5px;text-transform:uppercase;color:#666A6E;text-decoration:none;border-bottom:1px solid #AAAFB4;padding-bottom:2px;transition:color .3s,border-color .3s;}
-.btn-g:hover{color:#0C0C0A;border-color:#0C0C0A;}
-@media(max-width:700px){.end-cta{grid-template-columns:1fr;gap:28px;padding:64px 20px;}}
+.gd-cell{
+  position:relative;
+  overflow:hidden;
+  aspect-ratio:3/4;
+  background:#DDDFE0;
+}
+/* The image starts at scale(1) and zooms to scale(1.09) */
+/* JS drives this based on scroll position of the section */
+.gd-cell img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+  transform:scale(1.0);
+  transform-origin:center center;
+  will-change:transform;
+}
+.gd-cell.ph{
+  display:flex;align-items:center;justify-content:center;
+  background:#E6E8E9;
+}
+.gd-cell.ph span{
+  font-size:8px;font-weight:300;letter-spacing:3px;
+  text-transform:uppercase;color:rgba(0,0,0,.18);
+}
+@media(max-width:700px){
+  .gallery-divider{grid-template-columns:repeat(2,1fr);gap:6px;padding:6px;}
+}
 
-.foot{padding:36px 52px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #E2E5E7;}
-.foot-logo{font-size:9px;font-weight:400;letter-spacing:8px;text-transform:uppercase;color:#666A6E;text-decoration:none;}
-.foot-back{font-size:9px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#AAAFB4;text-decoration:none;transition:color .3s;}
-.foot-back:hover{color:#0C0C0A;}
+/* ══════════════════════════════
+   MODELS
+══════════════════════════════ */
+.models{border-top:1px solid #E2E5E7;}
+.models-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+.model{border-right:1px solid #E2E5E7;transition:background .4s;}
+.model:last-child{border-right:none;}
+.model:hover{background:#ECEEF0;}
+.model-img{aspect-ratio:3/4;background:#E0E2E3;border-bottom:1px solid #E2E5E7;display:flex;align-items:center;justify-content:center;}
+.model-img span{font-size:8px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:rgba(0,0,0,.18);}
+.model-body{padding:28px 32px 40px;}
+.model-n{font-size:9px;font-weight:300;letter-spacing:5px;color:#9C8A6E;margin-bottom:10px;}
+.model-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:#0C0C0A;margin-bottom:6px;}
+.model-name em{font-style:italic;}
+.model-d{font-size:11px;font-weight:300;color:#666A6E;line-height:1.8;}
+@media(max-width:700px){
+  .models-grid{grid-template-columns:1fr;}
+  .model{border-right:none;border-bottom:1px solid #E2E5E7;}
+  .model-body{padding:20px;}
+}
+
+/* CTA */
+.cta{padding:96px 52px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;border-top:1px solid #E2E5E7;}
+.cta-h{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,44px);font-weight:400;line-height:1.1;color:#0C0C0A;}
+.cta-h em{font-style:italic;color:#9C8A6E;}
+.cta-p{font-size:14px;font-weight:300;color:#666A6E;line-height:1.9;margin-bottom:32px;max-width:340px;}
+.btn-d{display:inline-block;font-size:9px;font-weight:400;letter-spacing:3.5px;text-transform:uppercase;color:#F4F5F5;background:#2C2B28;padding:15px 38px;text-decoration:none;transition:background .3s;margin-right:16px;margin-bottom:10px;}
+.btn-d:hover{background:#3d3c38;}
+.btn-g{display:inline-block;font-size:9px;font-weight:300;letter-spacing:2.5px;text-transform:uppercase;color:#666A6E;text-decoration:none;border-bottom:1px solid #AAAFB4;padding-bottom:2px;}
+@media(max-width:700px){.cta{grid-template-columns:1fr;gap:24px;padding:64px 20px;}}
+.foot{padding:32px 52px;display:flex;justify-content:space-between;border-top:1px solid #E2E5E7;}
+.foot a{font-size:9px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:#AAAFB4;text-decoration:none;transition:color .3s;}
+.foot a:hover{color:#0C0C0A;}
 @media(max-width:700px){.foot{padding:24px 20px;}}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .9s ease,transform .9s ease;}
+.reveal.in{opacity:1;transform:none;}
+.d1{transition-delay:.12s}.d2{transition-delay:.24s}.d3{transition-delay:.36s}
+
+/* Hero animations */
+@keyframes fadeup{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.ai0{opacity:0;animation:fadeup .8s ease .3s forwards;}
+.ai1{opacity:0;animation:fadeup .8s ease .55s forwards;}
+.ai2{opacity:0;animation:fadeup .8s ease .75s forwards;}
+.ai3{opacity:0;animation:fadeup .8s ease 1s forwards;}
+.ai4{opacity:0;animation:fadeup .6s ease 1.3s forwards;}
 </style>
 </head>
 <body>
@@ -245,272 +159,178 @@ nav.lit{
   <a href="contact.html" class="n-cta">Enquire</a>
 </nav>
 
-<!-- ═══════════════════════════════════
-     THE ONE SCROLL STORY
-═══════════════════════════════════ -->
-<div id="story">
-  <div id="viewport">
+<!-- ① TEXT — hero, clean, centered -->
+<section class="txt center">
+  <p class="txt-eye ai0">Objects That Stay &nbsp;·&nbsp; The Pour Collection</p>
+  <h1 class="txt-h ai1">Some bottles deserve<br><em>a worthy</em> arrival.</h1>
+  <p class="txt-s ai2">Vegan leather. Cruelty-free. Made to be kept.</p>
+  <div class="txt-rule ai3"></div>
+  <div class="txt-specs ai3">
+    <div><p class="sp-l">Material</p><p class="sp-v">Premium vegan leather</p></div>
+    <div><p class="sp-l">Ethics</p><p class="sp-v">Vegan · Cruelty-free</p></div>
+    <div><p class="sp-l">Personalisation</p><p class="sp-v">Initials · Logos</p></div>
+    <div><p class="sp-l">Format</p><p class="sp-v">Single bottle · 3 models</p></div>
+  </div>
+  <div class="scroll-hint ai4">
+    <div class="sh-bar"></div>
+    <span class="sh-txt">Scroll</span>
+  </div>
+</section>
 
-    <!-- L1: Background texture layer -->
-    <div id="layer-bg">
-      <!-- placed by JS -->
+<!-- ② GALLERY DIVIDER — product photos + craft, zoom on scroll -->
+<div class="gallery-divider" id="gd1">
+  <div class="gd-cell ph"><span>Model 01</span></div>
+  <div class="gd-cell ph"><span>Model 02</span></div>
+  <div class="gd-cell"><img src="wine-bags/craft-08.jpeg" alt=""/></div>
+  <div class="gd-cell ph"><span>Model 03</span></div>
+  <div class="gd-cell"><img src="wine-bags/craft-03.jpeg" alt=""/></div>
+  <div class="gd-cell"><img src="wine-bags/craft-01.jpeg" alt=""/></div>
+  <div class="gd-cell ph"><span>Detail</span></div>
+  <div class="gd-cell"><img src="wine-bags/craft-04.jpeg" alt=""/></div>
+</div>
+
+<!-- ③ TEXT — craft story -->
+<section class="txt two-col">
+  <p class="txt-label reveal">The Pour<br>Collection</p>
+  <div class="reveal d1">
+    <h2 class="txt-body-h">Built to last.<br><em>Designed to be given.</em></h2>
+    <p class="txt-body-p">The Pour Collection is KNOTT's line of vegan leather wine carriers. Designed for the moment you arrive somewhere that matters — a dinner, a celebration, a first impression that lingers long after the evening ends.</p>
+    <p class="txt-body-p">Cruelty-free. Personalised with initials or your brand mark. Three distinct shapes, each in its own colour.</p>
+    <div class="txt-body-rule"></div>
+    <div class="specs-left">
+      <div><p class="sp-l">Construction</p><p class="sp-v">Precision-finished</p></div>
+      <div><p class="sp-l">Hardware</p><p class="sp-v">Brass, solid-cast</p></div>
+      <div><p class="sp-l">Lead time</p><p class="sp-v">Made to order</p></div>
     </div>
+  </div>
+</section>
 
-    <!-- L2: Portrait cards layer -->
-    <div id="layer-imgs">
-      <!-- placed by JS -->
+<!-- ④ GALLERY DIVIDER 2 — more craft details, zoom on scroll -->
+<div class="gallery-divider" id="gd2">
+  <div class="gd-cell"><img src="wine-bags/craft-06.jpeg" alt=""/></div>
+  <div class="gd-cell"><img src="wine-bags/craft-02.jpeg" alt=""/></div>
+  <div class="gd-cell"><img src="wine-bags/craft-05.jpeg" alt=""/></div>
+  <div class="gd-cell"><img src="wine-bags/craft-09.jpeg" alt=""/></div>
+</div>
+
+<!-- ⑤ MODELS -->
+<section class="models">
+  <div class="models-grid">
+    <div class="model">
+      <div class="model-img"><span>Photo coming</span></div>
+      <div class="model-body">
+        <p class="model-n">01</p>
+        <h3 class="model-name">Model 01<br><em>Coming soon.</em></h3>
+        <p class="model-d">One shape, one colour, one intention.</p>
+      </div>
     </div>
-
-    <!-- L3: Text panels layer -->
-    <div id="layer-text">
-
-      <!-- Chapter 0: Intro -->
-      <div class="txt-panel" id="ch0">
-        <p class="tp-eye">Objects That Stay &nbsp;·&nbsp; The Pour Collection</p>
-        <h1 class="tp-h">Some bottles deserve<br><em>a worthy</em> arrival.</h1>
-        <p class="tp-sub">Vegan leather. Cruelty-free. Made to be kept.</p>
+    <div class="model">
+      <div class="model-img"><span>Photo coming</span></div>
+      <div class="model-body">
+        <p class="model-n">02</p>
+        <h3 class="model-name">Model 02<br><em>Coming soon.</em></h3>
+        <p class="model-d">One shape, one colour, one intention.</p>
       </div>
-
-      <!-- Chapter 1: What it is -->
-      <div class="txt-panel" id="ch1">
-        <p class="tp-eye">The Pour Collection</p>
-        <h2 class="tp-h" style="font-size:clamp(22px,3vw,44px);">A wine bag is not a bag.<br><em>It is a gesture.</em></h2>
-        <p class="tp-sub">Designed for the moment you arrive somewhere that matters. A dinner. A celebration. A first impression that lingers long after the evening ends.</p>
-        <div class="tp-rule"></div>
-        <div class="tp-specs">
-          <div class="tp-spec"><p class="tp-spec-lbl">Material</p><p class="tp-spec-val">Premium vegan leather</p></div>
-          <div class="tp-spec"><p class="tp-spec-lbl">Ethics</p><p class="tp-spec-val">Vegan · Cruelty-free</p></div>
-          <div class="tp-spec"><p class="tp-spec-lbl">Personalisation</p><p class="tp-spec-val">Initials · Logos</p></div>
-          <div class="tp-spec"><p class="tp-spec-lbl">Format</p><p class="tp-spec-val">Single bottle · 3 models</p></div>
-        </div>
-      </div>
-
-      <!-- Chapter 2: Material -->
-      <div class="txt-panel" id="ch2">
-        <p class="tp-eye">The material</p>
-        <h2 class="tp-h" style="font-size:clamp(22px,3vw,44px);">Built to last.<br><em>Designed to be given.</em></h2>
-        <p class="tp-sub">Premium vegan leather. No animals. No compromise on finish or feel. The texture is precise. The finish is clean.</p>
-      </div>
-
-      <!-- Chapter 3: Model 01 -->
-      <div class="txt-panel model-panel" id="ch3">
-        <p class="mp-num">01 / 03</p>
-        <h2 class="mp-name">Model 01<br><em>Coming soon.</em></h2>
-        <p class="mp-desc">One shape, one colour, one intention. Photos and name arriving shortly.</p>
-        <span class="mp-tag">Single bottle</span>
-      </div>
-
-      <!-- Chapter 4: Model 02 -->
-      <div class="txt-panel model-panel" id="ch4">
-        <p class="mp-num">02 / 03</p>
-        <h2 class="mp-name">Model 02<br><em>Coming soon.</em></h2>
-        <p class="mp-desc">One shape, one colour, one intention. Photos and name arriving shortly.</p>
-        <span class="mp-tag">Single bottle</span>
-      </div>
-
-      <!-- Chapter 5: Model 03 -->
-      <div class="txt-panel model-panel" id="ch5">
-        <p class="mp-num">03 / 03</p>
-        <h2 class="mp-name">Model 03<br><em>Coming soon.</em></h2>
-        <p class="mp-desc">One shape, one colour, one intention. Photos and name arriving shortly.</p>
-        <span class="mp-tag">Single bottle</span>
-      </div>
-
-      <!-- Chapter 6: Quote/end -->
-      <div class="txt-panel" id="ch6">
-        <p class="tp-eye">KNOTT &nbsp;·&nbsp; The Pour Collection</p>
-        <h2 class="tp-h" style="font-size:clamp(20px,2.8vw,40px);font-style:italic;">"The gift is not the wine.<br>The gift is the way it arrives."</h2>
-      </div>
-
     </div>
-
-    <!-- Scroll hint -->
-    <div class="scroll-hint" id="scrollHint">
-      <div class="sh-bar"></div>
-      <span class="sh-txt">Scroll</span>
+    <div class="model">
+      <div class="model-img"><span>Photo coming</span></div>
+      <div class="model-body">
+        <p class="model-n">03</p>
+        <h3 class="model-name">Model 03<br><em>Coming soon.</em></h3>
+        <p class="model-d">One shape, one colour, one intention.</p>
+      </div>
     </div>
+  </div>
+</section>
 
-    <!-- Progress dots -->
-    <div class="progress-dots" id="progDots">
-      <div class="pdot on"></div>
-      <div class="pdot"></div>
-      <div class="pdot"></div>
-      <div class="pdot"></div>
-      <div class="pdot"></div>
-      <div class="pdot"></div>
-      <div class="pdot"></div>
-    </div>
-
-  </div><!-- /viewport -->
-</div><!-- /story -->
-
-<!-- CTA below the scroll story -->
-<section class="end-cta">
-  <h2 class="end-h">Ready to<br><em>make it yours?</em></h2>
-  <div>
-    <p class="end-p">Corporate programs, custom personalisation, and made-to-order available. We'll respond within 24 hours.</p>
+<!-- ⑥ CTA -->
+<section class="cta">
+  <h2 class="cta-h reveal">Ready to<br><em>make it yours?</em></h2>
+  <div class="reveal d1">
+    <p class="cta-p">Corporate programs, custom personalisation, and made-to-order. We'll respond within 24 hours.</p>
     <a href="contact.html" class="btn-d">Enquire Now</a>
     <a href="catalogue.html" class="btn-g">Back to Catalogue</a>
   </div>
 </section>
 <div class="foot">
-  <a href="index.html" class="foot-logo">Knott</a>
-  <a href="catalogue.html" class="foot-back">← All Collections</a>
+  <a href="index.html">Knott</a>
+  <a href="catalogue.html">← All Collections</a>
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════════════════
-   ARCHITECTURE
-   ─────────────────────────────────────────────────────────
-   #story = 700vh tall. #viewport is sticky at top:0, 100vh.
-   7 chapters, each owns 1/7 of the scroll range (100vh each).
-   
-   Per frame:
-   1. Compute global progress P = scrollY / (storyH - viewH)  [0→1]
-   2. Compute chapter = floor(P * 7), chapterP = local 0→1
-   3. Show/hide text panel for current chapter
-   4. Drive bg images: slow parallax translateY
-   5. Drive card images: medium parallax translateY + stagger
-═══════════════════════════════════════════════════════════ */
+/* NAV */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('lit', scrollY > 40), {passive:true});
 
-const CHAPTERS = 7;
+/* ══════════════════════════════════════════
+   GALLERY MOTION
+   ──────────────────────────────────────────
+   Two effects combined:
 
-/* ── IMAGE DATA ── */
-// Background layer: large slow images (texture/material)
-const bgData = [
-  {src:'wine-bags/craft-03.jpeg', style:'left:0;top:0;width:45%;height:55%;'},
-  {src:'wine-bags/craft-04.jpeg', style:'right:0;top:20%;width:38%;height:50%;'},
-  {src:'wine-bags/craft-02.jpeg', style:'left:5%;bottom:0;width:32%;height:42%;'},
-  {src:'wine-bags/craft-07.jpeg', style:'right:8%;bottom:5%;width:28%;height:38%;'},
-];
+   1. CELL ENTRANCE — each cell slides up + fades in
+      as it enters the viewport. Staggered by index.
 
-// Card layer: portrait cards (product/craft) — each has chapter range when visible
-// [src, label, cssLeft, cssTop, width, height, speed, showFromChapter, showToChapter]
-const cardData = [
-  // Chapter 0–1: intro cards
-  ['wine-bags/craft-08.jpeg','The finish', '5%',  '8%',  230, 310, 0.45, 0, 2],
-  ['wine-bags/craft-01.jpeg','Material',   '68%', '12%', 210, 280, 0.30, 0, 2],
-  // Chapter 1–2: material cards
-  ['wine-bags/craft-06.jpeg','The tools',  '55%', '5%',  250, 330, 0.55, 1, 3],
-  ['wine-bags/craft-05.jpeg','Texture',    '15%', '50%', 195, 255, 0.35, 1, 3],
-  // Chapter 2: big texture
-  ['wine-bags/craft-04.jpeg','Grain',      '60%', '30%', 270, 360, 0.60, 2, 4],
-  // Chapter 3-5: model cards (placeholders)
-  [null,'Model 01',  '55%', '8%',  240, 320, 0.50, 3, 4],
-  [null,'Model 02',  '55%', '8%',  240, 320, 0.50, 4, 5],
-  [null,'Model 03',  '55%', '8%',  240, 320, 0.50, 5, 6],
-  // Chapter 6: end
-  ['wine-bags/craft-09.jpeg','Precision',  '20%', '15%', 220, 290, 0.40, 6, 7],
-  ['wine-bags/craft-10.jpeg','Atelier',    '62%', '40%', 200, 265, 0.28, 6, 7],
-];
+   2. IMAGE ZOOM — the img inside each cell scales
+      from 1.0 → 1.18 as you scroll through the section.
+      Much more visible than before.
+══════════════════════════════════════════ */
+function initGallery(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+  const cells = Array.from(section.querySelectorAll('.gd-cell'));
+  const imgs  = cells.map(c => c.querySelector('img')).filter(Boolean);
 
-/* ── BUILD DOM ── */
-const layerBg   = document.getElementById('layer-bg');
-const layerImgs = document.getElementById('layer-imgs');
+  // ENTRANCE: cells start translated down, fade + rise on scroll
+  cells.forEach((cell, i) => {
+    cell.style.opacity = '0';
+    cell.style.transform = 'translateY(40px)';
+    cell.style.transition = `opacity .8s ease ${i * 0.08}s, transform .9s cubic-bezier(.25,.1,.25,1) ${i * 0.08}s`;
+  });
 
-const bgEls = bgData.map(d => {
-  const div = document.createElement('div');
-  div.className = 'bg-img';
-  div.style.cssText = d.style;
-  if(d.src){
-    const img = document.createElement('img');
-    img.src = d.src; img.alt='';
-    div.appendChild(img);
-  }
-  layerBg.appendChild(div);
-  return div;
-});
-
-const cardEls = cardData.map(([src, label, l, t, w, h]) => {
-  const div = document.createElement('div');
-  div.className = 'img-card';
-  div.style.cssText = `left:${l};top:${t};width:${w}px;height:${h}px;`;
-  if(src){
-    const img = document.createElement('img'); img.src=src; img.alt=label||'';
-    div.appendChild(img);
-  } else {
-    // placeholder
-    div.style.background='#D8DADB';
-    const lbl = document.createElement('span');
-    lbl.style.cssText='position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:rgba(0,0,0,.2);font-family:Inter,sans-serif;';
-    lbl.textContent='Photo coming';
-    div.appendChild(lbl);
-  }
-  if(label){
-    const lbl = document.createElement('span'); lbl.className='img-card-lbl'; lbl.textContent=label;
-    div.appendChild(lbl);
-  }
-  layerImgs.appendChild(div);
-  return div;
-});
-
-/* ── PANELS ── */
-const panels = Array.from({length:CHAPTERS}, (_,i) => document.getElementById('ch'+i));
-const dots   = Array.from(document.querySelectorAll('.pdot'));
-const hint   = document.getElementById('scrollHint');
-const story  = document.getElementById('story');
-
-let currentChapter = -1;
-
-function tick(){
-  const storyRect = story.getBoundingClientRect();
-  const storyH    = story.offsetHeight;
-  const viewH     = window.innerHeight;
-  const scrolled  = -storyRect.top;
-  const maxScroll = storyH - viewH;
-
-  // Global progress 0→1
-  const P = Math.max(0, Math.min(1, scrolled / maxScroll));
-  const chapterF = P * CHAPTERS;
-  const chapter  = Math.min(Math.floor(chapterF), CHAPTERS - 1);
-  const chP      = chapterF - chapter; // 0→1 within chapter
-
-  // Show/hide scroll hint
-  if(P > 0.02) hint.classList.add('gone'); else hint.classList.remove('gone');
-
-  // Text panels
-  if(chapter !== currentChapter){
-    panels.forEach((p,i) => {
-      if(!p) return;
-      p.classList.remove('show','hide');
-      if(i === chapter) p.classList.add('show');
-      else if(i < chapter) p.classList.add('hide');
+  // Trigger entrance when section enters viewport
+  const entranceObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        cells.forEach(cell => {
+          cell.style.opacity = '1';
+          cell.style.transform = 'translateY(0)';
+        });
+        entranceObs.disconnect();
+      }
     });
-    dots.forEach((d,i)=>d.classList.toggle('on', i===chapter));
-    currentChapter = chapter;
+  }, { threshold: 0.05 });
+  entranceObs.observe(section);
+
+  // ZOOM: img scales as you scroll through
+  function tick() {
+    const rect    = section.getBoundingClientRect();
+    const viewH   = window.innerHeight;
+    const total   = viewH + section.offsetHeight;
+    const scrolled = viewH - rect.top;
+    const p = Math.max(0, Math.min(1, scrolled / total));
+
+    // scale 1.0 → 1.18 — clearly visible
+    const scale = 1 + p * 0.18;
+    imgs.forEach(img => {
+      img.style.transform = `scale(${scale})`;
+      img.style.transition = 'none'; // driven by scroll, not CSS transition
+    });
   }
 
-  // BG layer — very slow drift upward
-  bgEls.forEach((el, i) => {
-    const drift = P * viewH * 0.18 * (1 + i * 0.08);
-    el.style.transform = `translateY(-${drift}px)`;
-    // Show all bg images after chapter 0
-    el.classList.toggle('visible', P > 0.03);
-  });
-
-  // Card layer
-  cardData.forEach(([,, , , , , speed, from, to], i) => {
-    const el = cardEls[i];
-    const inRange = chapter >= from && chapter < to;
-    el.classList.toggle('visible', inRange);
-    if(inRange){
-      // Drift up at card's own speed
-      const drift = chP * viewH * 0.4 * speed + (chapter - from) * viewH * 0.4 * speed;
-      el.style.transform = `translateY(-${Math.max(0, drift)}px)`;
-    }
-  });
+  window.addEventListener('scroll', tick, {passive: true});
+  tick();
 }
 
-window.addEventListener('scroll', tick, {passive:true});
-window.addEventListener('resize', tick);
+initGallery('gd1');
+initGallery('gd2');
 
-// Nav
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', ()=>nav.classList.toggle('lit', scrollY>40), {passive:true});
-
-// Init
-tick();
-panels[0] && panels[0].classList.add('show');
+/* REVEAL */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+}, {threshold: .08});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 </script>
 </body>
 </html>
