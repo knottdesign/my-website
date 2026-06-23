@@ -27,13 +27,13 @@ body{background:var(--w);color:var(--bk);font-family:var(--sans);font-weight:300
   background:linear-gradient(160deg,#C9C9C7 0%,#9D9D9A 20%,#6B6B68 45%,#373735 75%,#1A1A1A 100%);
 }
 #logoIntro{
-  position:relative;height:100vh;display:flex;align-items:center;justify-content:center;
+  position:relative;height:100vh;display:flex;align-items:center;justify-content:center;padding-top:0;
   background:transparent;
   overflow:hidden;
 }
 .intro-logo{
-  display:flex;align-items:center;justify-content:center;gap:clamp(10px,2vw,28px);
-  width:100%;max-width:760px;padding:0 24px;position:relative;z-index:2;
+  display:flex;align-items:center;justify-content:center;gap:clamp(2px,0.5vw,8px);
+  width:100%;max-width:760px;padding:0 24px;position:relative;z-index:2;margin-top:20px;
 }
 .intro-logo img{
   display:block;height:auto;opacity:0;will-change:transform,opacity,filter;
@@ -59,7 +59,7 @@ body{background:var(--w);color:var(--bk);font-family:var(--sans);font-weight:300
   .intro-sub{transition:none;opacity:1;transform:none;}
 }
 @media(max-width:768px){
-  .intro-logo{max-width:92vw;gap:8px;}
+  .intro-logo{max-width:92vw;gap:3px;}
   .intro-logo .logo-k{transform:translateX(-34vw) rotate(-2deg);}
   .intro-logo .logo-nott{transform:translateX(60vw) rotate(1deg);}
 }
