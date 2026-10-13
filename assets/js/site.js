@@ -6,7 +6,8 @@ const SITE = {
   name: "Atelier",                     // PLACEHOLDER until the name is decided
   email: "hello@example.com",          // PLACEHOLDER enquiry address
   instagram: "",                       // e.g. "https://instagram.com/yourbrand"
-  currency: "USD"
+  currency: "USD",
+  showPrices: false                    // prices hidden for now; set true to show them
 };
 
 (function () {
@@ -75,7 +76,7 @@ const SITE = {
       <div class="card__body">
         <span class="card__name">${p.name}</span>
         <span class="card__meta">${p.finish}</span>
-        <span class="card__price">${money(p.price)}</span>
+        ${SITE.showPrices ? `<span class="card__price">${money(p.price)}</span>` : ""}
       </div>
     </a>`;
 
@@ -123,7 +124,6 @@ const SITE = {
     $("[data-p-cat]", pieceEl).href = `collection.html?c=${p.category}`;
     $("[data-p-name]", pieceEl).textContent = p.name;
     $("[data-p-finish]", pieceEl).textContent = p.finish;
-    $("[data-p-price]", pieceEl).textContent = money(p.price);
     $("[data-p-desc]", pieceEl).textContent = p.description;
     $("[data-p-enquire]", pieceEl).href = `enquire.html?piece=${p.id}`;
     $(".specs", pieceEl).innerHTML = Object.entries(p.specs)
