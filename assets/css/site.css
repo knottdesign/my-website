@@ -7,8 +7,8 @@
    gold   — rare accent
    ========================================================== */
 :root {
-  --paper: #F7F5F1;
-  --paper-2: #F0EDE7;
+  --paper: #F7F6F3;
+  --paper-2: #EFEEEA;
   --ink: #1F3A7A;
   --ink-deep: #142852;
   --text: #1E2433;
@@ -115,7 +115,7 @@ p { margin: 0 0 1em; }
   transition: background .6s var(--ease), border-color .6s var(--ease), transform .6s var(--ease);
   border-bottom: 1px solid transparent;
 }
-.header.is-scrolled { background: rgba(247, 245, 241, .92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-color: var(--line); }
+.header.is-scrolled { background: rgba(247, 246, 243, .92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-color: var(--line); }
 .header.is-hidden { transform: translateY(-100%); }
 .header__inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; width: 100%; }
 .nav { display: flex; gap: 36px; }
