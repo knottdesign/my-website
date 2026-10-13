@@ -3,7 +3,7 @@
    and every page updates.
    ========================================================== */
 const SITE = {
-  name: "Atelier",                     // PLACEHOLDER until the name is decided
+  name: "ROMXI",                      // working name
   email: "hello@example.com",          // PLACEHOLDER enquiry address
   instagram: "",                       // e.g. "https://instagram.com/yourbrand"
   currency: "USD",
