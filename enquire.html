@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enquire — {brand}</title>
+<meta name="description" content="Enquire about or order a piece.">
+<meta name="theme-color" content="#F7F5F1">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<header class="header" data-solid>
+  <div class="wrap header__inner">
+    <nav class="nav" aria-label="Primary">
+      <a href="collection.html">Collection</a>
+      <a href="about.html">The Maison</a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button>
+    <a class="brand" href="index.html" data-brand>Atelier</a>
+    <nav class="nav nav--right" aria-label="Secondary">
+      <a href="collection.html?c=rings">Rings</a>
+      <a href="enquire.html" aria-current="page">Enquire</a>
+    </nav>
+  </div>
+</header>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <a href="collection.html">Collection</a>
+  <a href="collection.html?c=bracelets">Bracelets</a>
+  <a href="collection.html?c=earrings">Earrings</a>
+  <a href="collection.html?c=necklaces">Necklaces</a>
+  <a href="collection.html?c=rings">Rings</a>
+  <a href="about.html">The Maison</a>
+  <a href="enquire.html">Enquire</a>
+</div>
+<main>
+  <section class="page-head wrap">
+    <p class="overline reveal">Enquire &amp; order</p>
+    <h1 class="reveal" style="--d:.1s">At your service</h1>
+    <p class="reveal" style="--d:.2s">Tell us which piece you love. We reply personally with availability, sizing and a secure payment link.</p>
+  </section>
+  <section class="wrap" style="padding-bottom:clamp(80px,10vw,140px)">
+    <form class="form reveal" style="--d:.3s" data-enquire>
+      <div class="field">
+        <label for="f-piece">Piece</label>
+        <select id="f-piece" name="piece"></select>
+      </div>
+      <div class="field">
+        <label for="f-intent">I would like to</label>
+        <select id="f-intent" name="intent">
+          <option>Order this piece</option>
+          <option>Ask a question</option>
+          <option>Arrange a gift</option>
+          <option>Discuss a custom size or finish</option>
+        </select>
+      </div>
+      <div class="form__row">
+        <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+      </div>
+      <div class="field"><label for="f-phone">Phone (optional)</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+      <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" placeholder="Ring size, wrist size, a date you need it by…"></textarea></div>
+      <div><button class="btn btn--solid" type="submit">Send enquiry</button></div>
+    </form>
+  </section>
+</main>
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <a class="brand" href="index.html" data-brand>Atelier</a>
+        <p style="max-width:340px;color:var(--muted)">Moissanite set in sterling silver, finished in rhodium, platinum and gold. Every piece made with care.</p>
+      </div>
+      <div>
+        <h4>Collection</h4>
+        <ul>
+          <li><a href="collection.html?c=bracelets">Bracelets</a></li>
+          <li><a href="collection.html?c=earrings">Earrings</a></li>
+          <li><a href="collection.html?c=necklaces">Necklaces</a></li>
+          <li><a href="collection.html?c=rings">Rings</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>The Maison</h4>
+        <ul>
+          <li><a href="about.html">Our story</a></li>
+          <li><a href="about.html#materials">Materials &amp; care</a></li>
+          <li><a href="enquire.html">Enquire &amp; order</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a data-email href="#">hello@example.com</a></li>
+          <li><a data-instagram href="#" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>© <span data-year></span> <span data-brand>Atelier</span></span>
+      <span>All stones are moissanite. Carat weights given as diamond-equivalent weight (DEW).</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/pieces.js"></script>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

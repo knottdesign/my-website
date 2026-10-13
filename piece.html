@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{brand}</title>
+<meta name="description" content="Moissanite jewelry.">
+<meta name="theme-color" content="#F7F5F1">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<header class="header" data-solid>
+  <div class="wrap header__inner">
+    <nav class="nav" aria-label="Primary">
+      <a href="collection.html">Collection</a>
+      <a href="about.html">The Maison</a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button>
+    <a class="brand" href="index.html" data-brand>Atelier</a>
+    <nav class="nav nav--right" aria-label="Secondary">
+      <a href="collection.html?c=rings">Rings</a>
+      <a href="enquire.html">Enquire</a>
+    </nav>
+  </div>
+</header>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <a href="collection.html">Collection</a>
+  <a href="collection.html?c=bracelets">Bracelets</a>
+  <a href="collection.html?c=earrings">Earrings</a>
+  <a href="collection.html?c=necklaces">Necklaces</a>
+  <a href="collection.html?c=rings">Rings</a>
+  <a href="about.html">The Maison</a>
+  <a href="enquire.html">Enquire</a>
+</div>
+<main class="piece wrap" data-piece>
+  <p class="crumbs"><a href="collection.html">Collection</a> &nbsp;/&nbsp; <a data-p-cat href="#"></a></p>
+  <div class="piece__grid">
+    <div class="piece__gallery"></div>
+    <div class="piece__info">
+      <p class="overline" data-p-finish></p>
+      <h1 data-p-name></h1>
+      <p class="piece__price" data-p-price></p>
+      <p class="piece__desc" data-p-desc></p>
+      <div class="piece__actions">
+        <a class="btn btn--solid" data-p-enquire href="enquire.html">Enquire &amp; order</a>
+      </div>
+      <dl class="specs"></dl>
+      <p class="note">We reply personally to every enquiry, usually within one working day, with availability, sizing and a secure payment link.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="section-head"><div><p class="overline">You may also like</p><h2>More pieces</h2></div></div>
+    <div class="grid" data-related></div>
+  </section>
+</main>
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <a class="brand" href="index.html" data-brand>Atelier</a>
+        <p style="max-width:340px;color:var(--muted)">Moissanite set in sterling silver, finished in rhodium, platinum and gold. Every piece made with care.</p>
+      </div>
+      <div>
+        <h4>Collection</h4>
+        <ul>
+          <li><a href="collection.html?c=bracelets">Bracelets</a></li>
+          <li><a href="collection.html?c=earrings">Earrings</a></li>
+          <li><a href="collection.html?c=necklaces">Necklaces</a></li>
+          <li><a href="collection.html?c=rings">Rings</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>The Maison</h4>
+        <ul>
+          <li><a href="about.html">Our story</a></li>
+          <li><a href="about.html#materials">Materials &amp; care</a></li>
+          <li><a href="enquire.html">Enquire &amp; order</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a data-email href="#">hello@example.com</a></li>
+          <li><a data-instagram href="#" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>© <span data-year></span> <span data-brand>Atelier</span></span>
+      <span>All stones are moissanite. Carat weights given as diamond-equivalent weight (DEW).</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/pieces.js"></script>
+<script src="assets/js/site.js"></script>
+</body>
+</html>
